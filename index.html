@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junhao Gao — Resume</title>
+<style>
+:root{--bg:#f9f9f7;--card:#fff;--accent:#1a1a2e;--accent2:#2563eb;--text:#1a1a1a;--muted:#6b7280;--border:#e5e7eb;--tag-bg:#eff6ff;--tag-text:#1d4ed8;--tl:#d1d5db;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;}
+
+/* Header */
+.header{background:var(--accent);color:#fff;padding:48px 0 36px;text-align:center;position:relative;}
+.header h1{font-size:2.2rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.header .subtitle{color:#93c5fd;font-size:0.95rem;margin-bottom:16px;}
+.header .contacts{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;}
+.header .contacts a{color:#bfdbfe;text-decoration:none;font-size:0.88rem;}
+.header .contacts a:hover{color:#fff;}
+
+/* Language toggle */
+.lang-switch{position:absolute;top:20px;right:24px;display:flex;gap:4px;}
+.lang-btn{background:rgba(255,255,255,0.1);color:#bfdbfe;border:1px solid rgba(255,255,255,0.2);padding:5px 14px;border-radius:20px;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.2s;}
+.lang-btn:hover{background:rgba(255,255,255,0.2);color:#fff;}
+.lang-btn.active{background:#2563eb;color:#fff;border-color:#2563eb;}
+
+/* Nav */
+.nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
+.nav ul{display:flex;justify-content:center;list-style:none;max-width:900px;margin:0 auto;}
+.nav ul li a{display:block;padding:14px 28px;color:var(--muted);text-decoration:none;font-size:0.88rem;font-weight:500;border-bottom:2px solid transparent;transition:all 0.2s;}
+.nav ul li a:hover,.nav ul li a.active{color:var(--accent2);border-bottom-color:var(--accent2);}
+
+/* Main */
+main{max-width:900px;margin:0 auto;padding:40px 20px 80px;}
+section{display:none;}
+section.active{display:block;}
+.section-title{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:24px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+
+/* Timeline */
+.timeline{position:relative;padding-left:28px;}
+.timeline::before{content:'';position:absolute;left:6px;top:8px;bottom:8px;width:1px;background:var(--tl);}
+.timeline-item{position:relative;margin-bottom:32px;}
+.timeline-item::before{content:'';position:absolute;left:-24px;top:8px;width:8px;height:8px;border-radius:50%;background:var(--accent2);border:2px solid #fff;box-shadow:0 0 0 1px var(--accent2);}
+
+/* Card */
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:16px;transition:box-shadow 0.2s;}
+.card:hover{box-shadow:0 2px 12px rgba(0,0,0,0.07);}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.card-left{flex:1;}.card-right{text-align:right;flex-shrink:0;}
+.card h3{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:2px;}
+.card .company{font-size:0.88rem;color:var(--accent2);font-weight:500;}
+.card .period,.card .loc{font-size:0.8rem;color:var(--muted);}
+
+/* Tags */
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.tag{background:var(--tag-bg);color:var(--tag-text);font-size:0.75rem;padding:2px 10px;border-radius:20px;font-weight:500;}
+.tag.green{background:#f0fdf4;color:#16a34a;}
+.tag.purple{background:#faf5ff;color:#7c3aed;}
+.tag.mini{font-size:0.68rem;padding:1px 7px;}
+
+/* Outer expand button */
+.expand-btn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:0.8rem;color:var(--accent2);cursor:pointer;border:none;background:none;padding:0;font-family:inherit;}
+.expand-btn:hover{text-decoration:underline;}
+.expand-btn .arrow{transition:transform 0.2s;display:inline-block;}
+.expand-btn.open .arrow{transform:rotate(180deg);}
+.expandable{display:none;margin-top:14px;padding-top:14px;border-top:1px solid #f3f4f6;}
+.expandable.open{display:block;}
+
+/* Sub-project rows (clickable → modal) */
+.subprojects{margin:0;}
+.subproject{border-top:1px solid var(--border);}
+.subproject:first-child{border-top:none;}
+.subproject-header{display:flex;justify-content:space-between;align-items:center;padding:10px 4px;cursor:pointer;user-select:none;gap:8px;border-radius:6px;transition:background 0.15s;}
+.subproject-header:hover{background:#f8fafc;}
+.subproject-left{flex:1;}
+.subproject-title{font-size:0.82rem;font-weight:600;color:var(--text);display:block;margin-bottom:5px;}
+.subproject-mini-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.subproject-icon{font-size:0.72rem;color:var(--muted);flex-shrink:0;transition:color 0.15s;white-space:nowrap;}
+.subproject-header:hover .subproject-icon{color:var(--accent2);}
+.subproject-nested{display:none;margin-left:14px;border-left:2px solid #e2e8f0;padding-left:6px;}
+.subproject-nested .subproject{border-top:1px solid #f1f5f9;}
+.subproject-nested .subproject-title{font-size:0.78rem;color:var(--muted);}
+.subproject-nested .subproject-header:hover .subproject-title{color:var(--text);}
+
+/* Metric chip */
+.metric{display:inline-block;background:#fef9c3;color:#854d0e;font-size:0.78rem;padding:1px 8px;border-radius:4px;font-weight:600;margin:2px;}
+
+/* Expand area for Projects section */
+.expandable h4{font-size:0.8rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:12px 0 6px;}
+.expandable h4:first-child{margin-top:0;}
+.expandable ul{padding-left:16px;}
+.expandable ul li{font-size:0.88rem;color:var(--text);margin-bottom:5px;line-height:1.5;}
+.expandable p{font-size:0.88rem;color:var(--text);margin-bottom:6px;}
+
+/* Skills */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.skill-group{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+.skill-group h3{font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;}
+.skill-list{display:flex;flex-wrap:wrap;gap:6px;}
+
+/* Education */
+.edu-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.edu-card .degree{font-weight:600;font-size:0.95rem;}
+.edu-card .school{color:var(--accent2);font-size:0.88rem;margin-top:2px;}
+.edu-card .year{color:var(--muted);font-size:0.82rem;white-space:nowrap;}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border-radius:16px;max-width:760px;width:100%;position:relative;box-shadow:0 25px 60px rgba(0,0,0,0.3);margin:auto;}
+.modal-hd{padding:22px 28px 14px;border-bottom:1px solid var(--border);}
+.modal-hd h2{font-size:1.05rem;font-weight:700;padding-right:36px;line-height:1.4;}
+.modal-hd .modal-sub{font-size:0.78rem;color:var(--muted);margin-top:3px;}
+.modal-close{position:absolute;top:16px;right:18px;font-size:1.4rem;border:none;background:none;cursor:pointer;color:var(--muted);width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;line-height:1;}
+.modal-close:hover{background:#f3f4f6;color:var(--text);}
+.modal-bd{padding:18px 28px 30px;}
+
+/* Modal stat row */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin:14px 0;}
+.stat-box{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:11px 8px;text-align:center;}
+.stat-val{font-size:1.1rem;font-weight:700;color:var(--accent2);line-height:1.2;}
+.stat-lbl{font-size:0.65rem;color:var(--muted);margin-top:3px;line-height:1.3;}
+
+/* Modal pipeline */
+.pipeline{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:10px 0;}
+.p-step{background:#eff6ff;color:#1d4ed8;font-size:0.7rem;padding:3px 9px;border-radius:5px;font-weight:500;white-space:nowrap;}
+.p-arr{color:#93c5fd;font-size:0.75rem;flex-shrink:0;}
+
+/* Modal section header */
+.m-sec{margin:18px 0 7px;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);border-bottom:1px solid var(--border);padding-bottom:4px;}
+
+/* Modal content */
+.modal-bd ul{padding-left:18px;margin:4px 0 10px;}
+.modal-bd ul li{font-size:0.875rem;color:var(--text);margin-bottom:6px;line-height:1.55;}
+.modal-bd p{font-size:0.875rem;color:var(--text);margin-bottom:8px;}
+
+/* Highlight boxes */
+.box-green{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:11px 14px;margin:10px 0;font-size:0.84rem;color:#166534;}
+.box-blue{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:11px 14px;margin:10px 0;font-size:0.84rem;color:#1e40af;}
+.box-amber{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:11px 14px;margin:10px 0;font-size:0.84rem;color:#92400e;}
+
+/* Compare before/after */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
+.cbox{border-radius:8px;padding:11px 14px;font-size:0.82rem;}
+.cbox.before{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;}
+.cbox.after{background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;}
+.cbox .clbl{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;opacity:0.7;}
+
+/* Bar chart */
+.bar-item{margin:6px 0;}
+.bar-label{font-size:0.74rem;color:var(--muted);margin-bottom:2px;}
+.bar-track{background:#f1f5f9;border-radius:4px;height:22px;overflow:hidden;}
+.bar-fill{background:var(--accent2);height:100%;border-radius:4px;display:flex;align-items:center;padding:0 8px;color:#fff;font-size:0.72rem;font-weight:700;min-width:36px;}
+.bar-fill.orange{background:#f59e0b;}
+
+/* Responsive */
+@media(max-width:600px){
+  .header h1{font-size:1.5rem;}
+  .lang-switch{top:12px;right:12px;}
+  .nav ul li a{padding:12px 14px;font-size:0.8rem;}
+  .card-header{flex-direction:column;}
+  .card-right{text-align:left;}
+  .edu-card{flex-direction:column;align-items:flex-start;}
+  .compare{grid-template-columns:1fr;}
+  .modal-overlay{padding:16px 10px;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Junhao Gao</h1>
+<div class="contacts">
+    <a href="tel:+8613106179201">+86 131 0617 9201</a>
+    <a href="mailto:gaojunhaozed@163.com">gaojunhaozed@163.com</a>
+  </div>
+  <div class="lang-switch">
+    <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" data-lang="cn" onclick="setLang('cn')">中文</button>
+  </div>
+</div>
+
+<nav class="nav">
+  <ul>
+    <li><a href="#" class="active" data-tab="experience"><span data-en="Experience" data-cn="工作经历">Experience</span></a></li>
+    <li><a href="#" data-tab="projects"><span data-en="Projects" data-cn="项目">Projects</span></a></li>
+    <li><a href="#" data-tab="education"><span data-en="Education" data-cn="教育背景">Education</span></a></li>
+    <li><a href="#" data-tab="skills"><span data-en="Skills" data-cn="技术栈">Skills</span></a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- ══ EXPERIENCE ══ -->
+<section id="experience" class="active">
+  <p class="section-title" data-en="Work Experience" data-cn="工作经历">Work Experience</p>
+
+  <div class="timeline">
+
+    <!-- Yiren Digital -->
+    <div class="timeline-item">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-left">
+            <div class="company" data-en="Yiren Digital Ltd." data-cn="宜人金科">Yiren Digital Ltd.</div>
+            <h3 data-en="Data Scientist" data-cn="数据科学家">Data Scientist</h3>
+          </div>
+          <div class="card-right">
+            <div class="period">06/2025 – 06/2026</div>
+            <div class="loc">China</div>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">LightGBM</span><span class="tag">PySpark</span><span class="tag">SQL</span>
+          <span class="tag">Credit Risk</span><span class="tag">Feature Engineering</span><span class="tag">IV/PSI</span><span class="tag">OOT Validation</span><span class="tag">joblib</span><span class="tag">Knowledge Distillation</span>
+        </div>
+        <button class="expand-btn" onclick="toggle(this)">
+          <span data-en="Show all subprojects" data-cn="展开全部子项目">Show all subprojects</span> <span class="arrow">▾</span>
+        </button>
+        <div class="expandable">
+          <div class="subprojects">
+<!-- YIREN-SUBPROJECTS-START -->
+            <div class="subproject">
+              <div class="subproject-header" onclick="openModal('y8')">
+                <div class="subproject-left">
+                  <span class="subproject-title" data-en="① Standardized Modeling Toolkit (model_method)" data-cn="① 建模标准化工具链">① Standardized Modeling Toolkit (model_method)</span>
+                  <div class="subproject-mini-tags"><span class="tag mini">PySpark</span><span class="tag mini">Hive</span><span class="tag mini">LightGBM</span><span class="tag mini">Feature Engineering</span></div>
+                </div>
+                <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+              </div>
+            </div>
+            <div class="subproject">
+              <div class="subproject-header" onclick="toggleGroup('ml-models-group')">
+                <div class="subproject-left">
+                  <span class="subproject-title" data-en="② Credit Risk ML Models  ·  5 models" data-cn="② 信用风险机器学习模型 · 5 个">② Credit Risk ML Models  ·  5 models</span>
+                  <div class="subproject-mini-tags"><span class="tag mini">LightGBM</span><span class="tag mini">Credit Risk</span><span class="tag mini">OOT</span><span class="tag mini">Feature Engineering</span></div>
+                </div>
+                <span class="subproject-icon" data-en="Expand ▾" data-cn="展开 ▾">Expand ▾</span>
+              </div>
+            </div>
+            <div class="subproject-nested" id="ml-models-group">
+              <div class="subproject">
+                <div class="subproject-header" onclick="openModal('y1')">
+                  <div class="subproject-left">
+                    <span class="subproject-title" data-en="First-loan Credit Risk Model" data-cn="首贷交易风险模型">First-loan Credit Risk Model</span>
+                    <div class="subproject-mini-tags"><span class="tag mini">LightGBM</span><span class="tag mini">Credit Risk</span><span class="tag mini">IV/PSI</span><span class="tag mini">OOT</span></div>
+                  </div>
+                  <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+                </div>
+              </div>
+              <div class="subproject">
+                <div class="subproject-header" onclick="openModal('y2')">
+                  <div class="subproject-left">
+                    <span class="subproject-title" data-en="In-loan New-borrower Risk Model" data-cn="贷中次新客交易风险模型">In-loan New-borrower Risk Model</span>
+                    <div class="subproject-mini-tags"><span class="tag mini">LightGBM</span><span class="tag mini">Two-stage</span><span class="tag mini">AUC/KS</span><span class="tag mini">OOT</span></div>
+                  </div>
+                  <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+                </div>
+              </div>
+              <div class="subproject">
+                <div class="subproject-header" onclick="openModal('y3')">
+                  <div class="subproject-left">
+                    <span class="subproject-title" data-en="Model Retirement via Knowledge Distillation" data-cn="过退蒸馏风控模型">Model Retirement via Knowledge Distillation</span>
+                    <div class="subproject-mini-tags"><span class="tag mini">LightGBM</span><span class="tag mini">Knowledge Distillation</span><span class="tag mini">Model Lifecycle</span></div>
+                  </div>
+                  <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+                </div>
+              </div>
+              <div class="subproject">
+                <div class="subproject-header" onclick="openModal('y4')">
+                  <div class="subproject-left">
+                    <span class="subproject-title" data-en="Recovery Prediction Model (Flow-in)" data-cn="回收预测模型（流入客群）">Recovery Prediction Model (Flow-in)</span>
+                    <div class="subproject-mini-tags"><span class="tag mini">LightGBM</span><span class="tag mini">Incremental Signal</span><span class="tag mini">OOT</span></div>
+                  </div>
+                  <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+                </div>
+              </div>
+              <div class="subproject">
+                <div class="subproject-header" onclick="openModal('y5')">
+                  <div class="subproject-left">
+                    <span class="subproject-title" data-en="Rapid Transition Model" data-cn="快速过渡交易风险模型">Rapid Transition Model</span>
+                    <div class="subproject-mini-tags"><span class="tag mini">LightGBM</span><span class="tag mini">Feature Engineering</span><span class="tag mini">Sample Weighting</span><span class="tag mini">Rapid Iteration</span></div>
+                  </div>
+                  <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+                </div>
+              </div>
+            </div>
+            <div class="subproject">
+              <div class="subproject-header" onclick="openModal('y6')">
+                <div class="subproject-left">
+                  <span class="subproject-title" data-en="③ Credit Bureau Feature Analysis &amp; DW Rebuild" data-cn="③ 征信特征未查得分析与数仓重构">③ Credit Bureau Feature Analysis &amp; DW Rebuild</span>
+                  <div class="subproject-mini-tags"><span class="tag mini">Feature Engineering</span><span class="tag mini">Risk Stratification</span><span class="tag mini">Data Warehouse</span><span class="tag mini">IV</span></div>
+                </div>
+                <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+              </div>
+            </div>
+            <div class="subproject">
+              <div class="subproject-header" onclick="openModal('y7')">
+                <div class="subproject-left">
+                  <span class="subproject-title" data-en="④ ModelReport Automated Reporting System" data-cn="④ ModelReport 自动化模型报告系统">④ ModelReport Automated Reporting System</span>
+                  <div class="subproject-mini-tags"><span class="tag mini">joblib</span><span class="tag mini">AUC/KS/WOE/PSI</span><span class="tag mini">openpyxl</span><span class="tag mini">Parallel</span></div>
+                </div>
+                <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+              </div>
+            </div>
+            <!-- YIREN-SUBPROJECTS-END -->
+          </div>
+        </div>
+      </div>
+    </div><!-- /Yiren -->
+
+    <!-- Tianbao -->
+    <div class="timeline-item">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-left">
+            <div class="company" data-en="Tianbao Private Equity Fund" data-cn="天宝私募">Tianbao Private Equity Fund</div>
+            <h3 data-en="Quantitative Research Intern" data-cn="量化研究实习生">Quantitative Research Intern</h3>
+          </div>
+          <div class="card-right">
+            <div class="period">09/2024 – 05/2025</div>
+            <div class="loc">China</div>
+          </div>
+        </div>
+        <div class="tags">
+          <span class="tag">NLP</span><span class="tag">GRU</span><span class="tag">PyTorch</span>
+          <span class="tag">Alpha Factor</span><span class="tag">Alternative Data</span><span class="tag">LLM APIs</span><span class="tag">IC / Factor</span>
+        </div>
+        <button class="expand-btn" onclick="toggle(this)">
+          <span data-en="Show details" data-cn="展开详情">Show details</span> <span class="arrow">▾</span>
+        </button>
+        <div class="expandable">
+          <div class="subprojects">
+<!-- TIANBAO-SUBPROJECTS-START -->
+            <div class="subproject">
+              <div class="subproject-header" onclick="openModal('t1')">
+                <div class="subproject-left">
+                  <span class="subproject-title" data-en="① NLP Alpha Factor Research" data-cn="① NLP Alpha 因子研究">① NLP Alpha Factor Research</span>
+                  <div class="subproject-mini-tags"><span class="tag mini">GRU</span><span class="tag mini">PyTorch</span><span class="tag mini">HuggingFace</span><span class="tag mini">NLP</span><span class="tag mini">IC / Factor</span></div>
+                </div>
+                <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+              </div>
+            </div>
+            <div class="subproject">
+              <div class="subproject-header" onclick="openModal('t2')">
+                <div class="subproject-left">
+                  <span class="subproject-title" data-en="② Black Swan Risk Alert System" data-cn="② 黑天鹅风险预警系统">② Black Swan Risk Alert System</span>
+                  <div class="subproject-mini-tags"><span class="tag mini">LLM APIs</span><span class="tag mini">NLP</span><span class="tag mini">Risk Management</span><span class="tag mini">Pre-market Signal</span></div>
+                </div>
+                <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+              </div>
+            </div>
+            <div class="subproject">
+              <div class="subproject-header" onclick="openModal('t3')">
+                <div class="subproject-left">
+                  <span class="subproject-title" data-en="③ Data Infrastructure &amp; Tooling" data-cn="③ 数据基础设施与工具">③ Data Infrastructure &amp; Tooling</span>
+                  <div class="subproject-mini-tags"><span class="tag mini">Web Scraping</span><span class="tag mini">ETL</span><span class="tag mini">PyTorch</span></div>
+                </div>
+                <span class="subproject-icon" data-en="View details ↗" data-cn="查看详情 ↗">View details ↗</span>
+              </div>
+            </div>
+            <!-- TIANBAO-SUBPROJECTS-END -->
+          </div>
+        </div>
+      </div>
+    </div><!-- /Tianbao -->
+
+  </div><!-- /timeline -->
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section id="projects">
+  <p class="section-title" data-en="Projects" data-cn="项目经历">Projects</p>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-header">
+      <div class="card-left">
+        <div class="company" data-en="Personal Project" data-cn="个人项目">Personal Project</div>
+        <h3>AI-Powered Resume Automation (job_AI)</h3>
+      </div>
+      <div class="card-right"><div class="period">03/2026 – <span data-en="Present" data-cn="至今">Present</span></div></div>
+    </div>
+    <div class="tags"><span class="tag purple">Claude Code</span><span class="tag purple">LLM Application</span><span class="tag">Python</span><span class="tag">HTML/CSS/JS</span><span class="tag">WeasyPrint</span><span class="tag">Prompt Engineering</span></div>
+    <button class="expand-btn" onclick="toggle(this)"><span data-en="Show details" data-cn="展开详情">Show details</span> <span class="arrow">▾</span></button>
+    <div class="expandable">
+      <p data-en="End-to-end resume automation system built as a Claude Code skill pipeline. Produces two output formats: a JD-customized PDF resume and an interactive HTML portfolio — with bilingual EN/CN toggle, per-project modal detail panels (stat-row, pipeline, compare boxes), and expandable project groups." data-cn="基于 Claude Code Skill 流水线构建的端到端简历自动化系统。支持两种输出格式：岗位定制化 PDF 简历，以及交互式 HTML 作品集（支持中英切换、每项目模态详情弹窗、可展开项目分组）。">End-to-end resume automation system built as a Claude Code skill pipeline. Produces two output formats: a JD-customized PDF resume and an interactive HTML portfolio — with bilingual EN/CN toggle, per-project modal detail panels (stat-row, pipeline, compare boxes), and expandable project groups.</p>
+      <h4 data-en="6-Skill Pipeline" data-cn="6 个 Skill 流水线">6-Skill Pipeline</h4>
+      <ul>
+        <li><strong>/extract-work</strong>: <span data-en="Reads CV + workflow files → structured work_memory.md as central knowledge base" data-cn="读取 CV + 工作流文件 → 生成结构化 work_memory.md 作为核心知识库">Reads CV + workflow files → structured work_memory.md as central knowledge base</span></li>
+        <li><strong>/interview-project</strong>: <span data-en="5-dimension deep interview for projects without workflow files → incremental write to work_memory.md" data-cn="对无工作流文件的项目进行 5 维度深度面试补录 → 增量写入 work_memory.md">5-dimension deep interview for projects without workflow files → incremental write to work_memory.md</span></li>
+        <li><strong>/update-cv</strong>: <span data-en="Parses JD → scores all projects by relevance → JD-customized Markdown resume with keyword alignment" data-cn="解析 JD → 对所有项目相关度评分 → 生成关键词对齐的定制化 Markdown 简历">Parses JD → scores all projects by relevance → JD-customized Markdown resume with keyword alignment</span></li>
+        <li><strong>/export-cv-pdf</strong>: <span data-en="Markdown → HTML → WeasyPrint PDF; handles markdown lib quirks (skill-line rendering, 2-column entry headers)" data-cn="Markdown → HTML → WeasyPrint PDF；处理 Python markdown 库渲染陷阱（skill-line、双栏 entry 标题）">Markdown → HTML → WeasyPrint PDF; handles markdown lib quirks</span></li>
+        <li><strong>/update-html</strong>: <span data-en="Generates interactive HTML resume from work_memory.md — bilingual toggle, project modals with metrics / pipeline / comparison visualizations, nested expandable subproject groups" data-cn="从 work_memory.md 生成交互式 HTML 简历 — 双语切换、项目模态弹窗（指标/流程/对比可视化）、嵌套可展开子项目分组">Generates interactive HTML resume from work_memory.md — bilingual toggle, project modals with metrics / pipeline / comparison visualizations, nested expandable subproject groups</span></li>
+        <li><strong>/extract-work-files</strong>: <span data-en="Deep-reads project codebases → writes project understanding to work_memory.md" data-cn="深度阅读项目代码库 → 写入项目理解到 work_memory.md">Deep-reads project codebases → writes project understanding to work_memory.md</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-header">
+      <div class="card-left">
+        <div class="company" data-en="Personal Project (customized from open-source)" data-cn="个人项目（基于开源定制）">Personal Project (customized from open-source)</div>
+        <h3>Quant Finance Paper Reading System (daily essay)</h3>
+      </div>
+      <div class="card-right"><div class="period">03/2026 – <span data-en="Present" data-cn="至今">Present</span></div></div>
+    </div>
+    <div class="tags"><span class="tag purple">Claude Code</span><span class="tag purple">LLM Application</span><span class="tag">arXiv API</span><span class="tag">OpenAlex API</span><span class="tag">Obsidian</span></div>
+    <button class="expand-btn" onclick="toggle(this)"><span data-en="Show details" data-cn="展开详情">Show details</span> <span class="arrow">▾</span></button>
+    <div class="expandable">
+      <p data-en="Automated daily paper discovery, analysis, and insight accumulation for quantitative finance research. Saves 1–2 hours/day vs manual browsing." data-cn="量化金融领域论文的每日自动发现、分析与洞察积累系统，相比人工浏览每天节省 1–2 小时。">Automated daily paper discovery, analysis, and insight accumulation for quantitative finance research. Saves 1–2 hours/day vs manual browsing.</p>
+      <h4 data-en="5-Skill Architecture" data-cn="5 个 Skill 架构">5-Skill Architecture</h4>
+      <ul>
+        <li><strong>/start-my-day</strong>: <span data-en="4-pass search (arXiv → S2 hot → top venue journals → domain queries) → scoring → daily Obsidian note" data-cn="4 轮检索（arXiv → S2 热门 → 顶会期刊 → 领域定向）→ 评分 → Obsidian 每日笔记">4-pass search → strict reviewer scoring → daily Obsidian recommendation note</span></li>
+        <li><strong>/paper-analyze</strong>: <span data-en="First-principles concept explanation, causal chain, chart interpretation, assumption audit" data-cn="第一性原理概念解释、因果链可视化、图表解读、作者假设审查">Deep narrative analysis: concept explanation, causal chain, chart interpretation, assumption audit</span></li>
+        <li><strong>/daily-summary</strong>: <span data-en="Extracts practitioner insights with hard admission criteria (use case + quantitative advantage + clean methodology)" data-cn="提取从业者级洞察，硬性准入标准（使用场景 + 量化优势 + 方法论清晰）">Extracts practitioner-grade insights; builds garbage-detection pattern library</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-header">
+      <div class="card-left">
+        <div class="company">Optiver — Imperial College London</div>
+        <h3 data-en="Virtual Trading Competition" data-cn="虚拟交易竞赛">Virtual Trading Competition</h3>
+      </div>
+      <div class="card-right"><div class="period">03/2024 – 04/2024</div></div>
+    </div>
+    <div class="tags"><span class="tag">Statistical Arbitrage</span><span class="tag">ETF Arbitrage</span><span class="tag">Mean Reversion</span><span class="tag">Bollinger Bands</span></div>
+    <button class="expand-btn" onclick="toggle(this)"><span data-en="Show details" data-cn="展开详情">Show details</span> <span class="arrow">▾</span></button>
+    <div class="expandable">
+      <p data-en="A 2-person team competition on Optiver's Optibook simulation platform, building and running fully automated trading strategies across equities, futures, options, and ETFs. After 1 month of strategy development, teams competed in a 1-hour live final with real-time order flow." data-cn="在 Optiver Optibook 模拟交易平台的2人团队竞赛，针对股票、期货、期权和ETF构建并运行全自动交易策略。经过1个月策略开发，进入1小时现场决赛，面对实时订单流全自动执行。">A 2-person team competition on Optiver's Optibook simulation platform, building and running fully automated trading strategies across equities, futures, options, and ETFs. After 1 month of strategy development, teams competed in a 1-hour live final with real-time order flow.</p>
+      <ul>
+        <li data-en="2-person team on Optiver's Optibook simulation platform; 1-month strategy development → 1-hour live final with real-time order flow, fully automated execution" data-cn="2人团队在 Optiver Optibook 模拟交易平台；1个月策略开发 → 1小时现场决赛，实时订单流，全自动执行">2-person team on Optiver's Optibook simulation; 1-month development → 1-hour live final</li>
+        <li data-en="3 strategy types: Dual-listing arbitrage (Bollinger Bands on cross-exchange spread) · ETF arbitrage (ETF vs weighted constituents) · Multi-MA mean reversion" data-cn="3类策略：双挂牌套利（跨交易所价差 Bollinger Bands）· ETF 套利（ETF vs 成分股加权价）· 多均线均值回归">3 strategies: Dual-listing arbitrage · ETF arbitrage · Multi-MA mean reversion</li>
+        <li>20–30 instruments (equities, futures, options, ETFs) · <span class="metric">Top 5 / 45 teams</span> · PnL <span class="metric">4,000+</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-header">
+      <div class="card-left">
+        <div class="company" data-en="Imperial College London — Coursework" data-cn="帝国理工学院 — 课程项目">Imperial College London — Coursework</div>
+        <h3 data-en="UK Mortgage Loan Default Prediction" data-cn="英国抵押贷款违约预测">UK Mortgage Loan Default Prediction</h3>
+      </div>
+      <div class="card-right"><div class="period">01/2024 – 02/2024</div></div>
+    </div>
+    <div class="tags"><span class="tag">CatBoost</span><span class="tag">Optuna</span><span class="tag">SMOTE</span><span class="tag">Cross-validation</span></div>
+    <button class="expand-btn" onclick="toggle(this)"><span data-en="Show details" data-cn="展开详情">Show details</span> <span class="arrow">▾</span></button>
+    <div class="expandable">
+      <p data-en="A machine learning project predicting default risk on UK mortgage loans, using a real-world dataset with ~5% default rate. Covers the full modeling pipeline from feature engineering through class imbalance handling, hyperparameter optimisation, and model evaluation." data-cn="基于真实英国抵押贷款数据集（违约率约5%）的违约风险预测项目，覆盖完整建模流程：特征工程、类别不平衡处理、超参优化和模型评估。">A machine learning project predicting default risk on UK mortgage loans, using a real-world dataset with ~5% default rate. Covers the full modeling pipeline from feature engineering through class imbalance handling, hyperparameter optimisation, and model evaluation.</p>
+      <ul>
+        <li data-en="UK mortgage dataset; ~5% default rate; engineered domain features: Debt-to-Income, Loan-to-Value" data-cn="英国抵押贷款数据集，违约率约 5%；构建领域特征：负债收入比、贷款价值比">UK mortgage dataset; ~5% default rate; domain features: Debt-to-Income, Loan-to-Value</li>
+        <li data-en="CatBoost selected for native categorical handling; Optuna hyperparameter search + 5-fold stratified CV; validation AUC ~0.70" data-cn="选用 CatBoost 处理混合型特征；Optuna 超参优化 + 5折分层交叉验证；验证集 AUC ~0.70">CatBoost + Optuna + 5-fold stratified CV; validation AUC <span class="metric">~0.70</span></li>
+        <li data-en="SMOTE + under-sampling hybrid; finding: SMOTE offers limited gain and risks overfitting vs direct sample weighting" data-cn="SMOTE + 欠采样混合；发现：SMOTE 增益有限且容易过拟合，样本加权更优">SMOTE hybrid sampling; finding: SMOTE offers limited gain vs direct sample weighting</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EDUCATION ══ -->
+<section id="education">
+  <p class="section-title" data-en="Education" data-cn="教育背景">Education</p>
+  <div class="edu-card">
+    <div>
+      <div class="degree" data-en="MSc Financial Technology" data-cn="金融科技理学硕士">MSc Financial Technology</div>
+      <div class="school">Imperial College London</div>
+    </div>
+    <div class="year">2023 – 2024 · London, UK</div>
+  </div>
+  <div class="edu-card">
+    <div>
+      <div class="degree" data-en="BEng Engineering (Mechanical with Business Finance)" data-cn="工程学学士（机械与商业金融）">BEng Engineering (Mechanical with Business Finance)</div>
+      <div class="school">University College London</div>
+    </div>
+    <div class="year">2020 – 2023 · London, UK</div>
+  </div>
+</section>
+
+<!-- ══ SKILLS ══ -->
+<section id="skills">
+  <p class="section-title" data-en="Technical Skills" data-cn="技术技能">Technical Skills</p>
+  <div class="skills-grid">
+    <div class="skill-group"><h3 data-en="Languages" data-cn="编程语言">Languages</h3><div class="skill-list"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">R</span><span class="tag">PySpark</span><span class="tag">MATLAB</span><span class="tag">C++</span></div></div>
+    <div class="skill-group"><h3 data-en="ML / Modeling" data-cn="机器学习 / 建模">ML / Modeling</h3><div class="skill-list"><span class="tag">LightGBM</span><span class="tag">CatBoost</span><span class="tag">XGBoost</span><span class="tag">PyTorch</span><span class="tag">GRU / LSTM</span><span class="tag">Scikit-learn</span><span class="tag">Optuna</span></div></div>
+    <div class="skill-group"><h3 data-en="Data Engineering" data-cn="数据工程">Data Engineering</h3><div class="skill-list"><span class="tag">PySpark</span><span class="tag">Hive / HDFS</span><span class="tag">Kyuubi</span><span class="tag">ETL Pipelines</span><span class="tag">Web Scraping</span></div></div>
+    <div class="skill-group"><h3 data-en="NLP / AI" data-cn="NLP / AI">NLP / AI</h3><div class="skill-list"><span class="tag">HuggingFace</span><span class="tag">LLM APIs</span><span class="tag">Claude Code</span><span class="tag">Prompt Engineering</span><span class="tag">Embedding</span><span class="tag">Vibe Coding</span></div></div>
+    <div class="skill-group"><h3 data-en="Risk &amp; Quant Analytics" data-cn="风控与量化分析">Risk &amp; Quant Analytics</h3><div class="skill-list"><span class="tag">IV / PSI</span><span class="tag">OOT Validation</span><span class="tag">AUC / KS / Lift</span><span class="tag">WOE Analysis</span><span class="tag">Factor IC</span></div></div>
+    <div class="skill-group"><h3 data-en="Tools &amp; Workflow" data-cn="工具与工作流">Tools &amp; Workflow</h3><div class="skill-list"><span class="tag">joblib</span><span class="tag">openpyxl</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">WeasyPrint</span><span class="tag">Obsidian</span><span class="tag">Git</span></div></div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-hd">
+      <h2 id="modalTitle"></h2>
+      <div class="modal-sub" id="modalSub"></div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-bd" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ── Language strings ──────────────────────────────────────────────────────
+let currentLang = 'en';
+let currentModalId = null;
+
+// ── Modal data (filled in next script block) ─────────────────────────────
+const MODAL = {};
+
+// ── Functions ─────────────────────────────────────────────────────────────
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  document.querySelectorAll('[data-en]').forEach(el => {
+    el.textContent = el.dataset[lang] || el.dataset.en;
+  });
+  // Re-render open modal
+  if (currentModalId) renderModal(currentModalId);
+}
+
+function toggle(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+  const sp = btn.querySelector('[data-en]');
+  if (!sp) return;
+  const isOpen = btn.classList.contains('open');
+  const enOpen  = sp.dataset.en.replace('Show','Hide').replace('展开','收起');
+  const cnOpen  = sp.dataset.cn ? sp.dataset.cn.replace('展开','收起') : '';
+  const enClose = sp.dataset.en;
+  const cnClose = sp.dataset.cn || '';
+  sp.textContent = currentLang === 'cn'
+    ? (isOpen ? cnOpen : cnClose)
+    : (isOpen ? enOpen : enClose);
+}
+
+function toggleGroup(id) {
+  const nested = document.getElementById(id);
+  const icon = nested.previousElementSibling.querySelector('.subproject-icon');
+  const isOpen = nested.style.display === 'block';
+  nested.style.display = isOpen ? 'none' : 'block';
+  if (icon) {
+    icon.dataset.en = isOpen ? 'Expand ▾' : 'Collapse ▴';
+    icon.dataset.cn = isOpen ? '展开 ▾' : '收起 ▴';
+    icon.textContent = currentLang === 'cn' ? icon.dataset.cn : icon.dataset.en;
+  }
+}
+
+function openModal(id) {
+  currentModalId = id;
+  renderModal(id);
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderModal(id) {
+  const d = MODAL[id];
+  if (!d) return;
+  const v = d[currentLang] || d.en;
+  document.getElementById('modalTitle').textContent = v.title;
+  document.getElementById('modalSub').textContent = v.sub || '';
+  document.getElementById('modalBody').innerHTML = v.body;
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  currentModalId = null;
+}
+
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// Escape key closes modal
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Tab navigation
+document.querySelectorAll('.nav a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('.nav a').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('section').forEach(x => x.classList.remove('active'));
+    a.classList.add('active');
+    document.getElementById(a.dataset.tab).classList.add('active');
+  });
+});
+</script>
+
+<script>
+Object.assign(MODAL, {
+y1: {
+  en: {
+    title: "First-loan Credit Risk Model",
+    sub: "Yiren Digital · Credit Risk · Jun 2025 – Present",
+    body: `<div class="m-sec">Project Overview</div>
+<p>A credit risk model inserted at the first-loan transaction node — after credit approval but before the borrower draws down their first loan. Its purpose is to provide incremental risk identification on top of the upstream credit approval model, particularly for borrowers who apply days or weeks after approval and carry meaningfully higher risk due to changed circumstances.</p>
+<div class="m-sec">Key Metrics</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">690k</div><div class="stat-lbl">Training samples</div></div>
+  <div class="stat-box"><div class="stat-val">≥0.61</div><div class="stat-lbl">Model AUC</div></div>
+  <div class="stat-box"><div class="stat-val">~2%</div><div class="stat-lbl">OOT AUC uplift vs credit approval model</div></div>
+  <div class="stat-box"><div class="stat-val">+0.2</div><div class="stat-lbl">OOT Tail Lift avg vs credit approval model</div></div>
+  <div class="stat-box"><div class="stat-val">&lt;0.01</div><div class="stat-lbl">Monthly AUC drift</div></div>
+</div>
+<div class="m-sec">Business Context</div>
+<ul>
+  <li><strong>Original flow:</strong> Credit Approval → Repeat Loan (no first-loan risk model existed)</li>
+  <li><strong>New flow:</strong> Credit Approval → <strong>First Loan (this model)</strong> → Repeat Loan</li>
+  <li><strong>Key insight:</strong> The first-loan node sits downstream of credit approval. Most users apply on the same day, but a subset applies days or weeks after credit approval — this delayed group carries meaningfully higher risk. Time-gap features (days between credit approval and first-loan application) capture this behavioral signal, delivering incremental tail risk lift beyond credit approval alone.</li>
+</ul>
+<div class="m-sec">Sample Design</div>
+<div class="compare">
+  <div class="cbox before"><div class="clbl">Train</div>690k samples · window: 2024/10 ~</div>
+  <div class="cbox after"><div class="clbl">OOT Test</div>30-day delinquency label: cycle-1 150k · cycle-2 82k · cycle-3 15k · window: 2025/09 – 11</div>
+</div>
+<div class="m-sec">Modeling Details</div>
+<ul>
+  <li>Per-channel evaluation with dedicated tail-segment Lift optimization</li>
+  <li><strong>Sample weighting:</strong> Higher weights applied to early-defaulting borrowers to amplify hard-to-detect high-risk signals</li>
+</ul>
+<div class="box-green">✓ AUC ≥ 0.61 · OOT tail Lift avg +0.2 vs credit approval model · Live production results (before model insertion: 1.8% mob1 bad rate with no first-loan model; after model insertion: 1.5%) — month-1 bad rate 1.8%→1.5%, month-2 bad rate 3.2%→2.5%</div>`
+  },
+  cn: {
+    title: "首贷交易风险模型",
+    sub: "宜人金科 · 信贷风控 · 2025年6月 – 至今",
+    body: `<div class="m-sec">项目概述</div>
+<p>一个插入首次贷款交易节点的风控模型——位于授信审批之后、借款人实际发起首笔贷款之前。在授信模型基础上实现增量风险识别，尤其针对授信通过后数天乃至更久才申请首贷的延迟人群——此类群体因情况可能已发生变化，风险显著更高。</p>
+<div class="m-sec">核心指标</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">69万</div><div class="stat-lbl">训练样本</div></div>
+  <div class="stat-box"><div class="stat-val">≥0.61</div><div class="stat-lbl">模型 AUC</div></div>
+  <div class="stat-box"><div class="stat-val">~2%</div><div class="stat-lbl">OOT AUC 提升（vs 授信模型）</div></div>
+  <div class="stat-box"><div class="stat-val">+0.2</div><div class="stat-lbl">OOT 尾部 Lift 均值（vs 授信模型）</div></div>
+  <div class="stat-box"><div class="stat-val">&lt;0.01</div><div class="stat-lbl">月度 AUC 漂移</div></div>
+</div>
+<div class="m-sec">业务背景</div>
+<ul>
+  <li><strong>原有链路：</strong>授信 → 复贷（无首贷专属风控模型）</li>
+  <li><strong>新链路：</strong>授信 → <strong>首贷（本模型）</strong> → 复贷</li>
+  <li><strong>核心洞察：</strong>首贷模型节点在授信节点之后。大多数用户在授信当天申请首贷，但部分用户会在授信通过数天乃至更久才申请——这批延迟用户风险显著更高。引入授信到首贷的时间差等特征，捕捉这一行为信号，在授信模型基础上实现尾部风险识别的增量提升。</li>
+</ul>
+<div class="m-sec">样本设计</div>
+<div class="compare">
+  <div class="cbox before"><div class="clbl">训练集</div>69 万条 · 窗口：2024/10 ~</div>
+  <div class="cbox after"><div class="clbl">测试集（OOT）</div>逾期1月30天标签：15万 · 逾期2月：8.2万 · 逾期3月：1.5万 · 窗口：2025/09 – 11</div>
+</div>
+<div class="m-sec">建模细节</div>
+<ul>
+  <li>按渠道分别评估，针对尾部高风险分段专项优化 Lift</li>
+  <li><strong>样本加权：</strong>对早期违约的高风险样本加权，放大难识别高风险样本的信号</li>
+</ul>
+<div class="box-green">✓ AUC ≥ 0.61 · OOT 尾部 Lift 均值 +0.2（vs 授信模型）· 实际上线结果（模型介入首贷节点前：无专属模型时坏率 1.8%；介入后：1.5%）— 逾期1月坏率 1.8%→1.5%，逾期2月坏率 3.2%→2.5%</div>`
+  }
+},
+
+y2: {
+  en: {
+    title: "In-loan New-borrower Risk Model",
+    sub: "Yiren Digital · In-loan Risk · Jun 2025 – Present",
+    body: `<div class="m-sec">Project Overview</div>
+<p>A credit risk model for "new borrowers" — customers who take a repeat loan within 3 months of credit approval. This segment is inherently small, unstable, and hard to predict. The core challenge: new borrower behaviour shifts rapidly, so a training set that excludes the most recent samples fails to capture current risk patterns. To address this, an incremental two-stage training strategy was used — expanding the training window with the latest data, then applying a longer-horizon label as a second-stage regulariser to prevent overfitting.</p>
+<div class="m-sec">Key Metrics</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">250k</div><div class="stat-lbl">Stage 1 training samples</div></div>
+  <div class="stat-box"><div class="stat-val">20k</div><div class="stat-lbl">OOT samples</div></div>
+  <div class="stat-box"><div class="stat-val">~0.61</div><div class="stat-lbl">OOT AUC (cycle-1 label)</div></div>
+  <div class="stat-box"><div class="stat-val">~0.58</div><div class="stat-lbl">OOT AUC (cycle-3 label)</div></div>
+  <div class="stat-box"><div class="stat-val">0.5</div><div class="stat-lbl">Correlation with old model — confirms independent risk dimension</div></div>
+</div>
+<div class="m-sec">What is a "New Borrower"?</div>
+<ul>
+  <li>Users who take a repeat loan within <strong>3 months</strong> of credit approval — highly unstable behaviour, small population, significantly harder to model than standard in-loan customers</li>
+  <li>A dedicated model existed but had decayed; goal was to build a replacement that outperforms it or identifies additional incremental signal on top of it</li>
+</ul>
+<div class="m-sec">Incremental Two-Stage Training Strategy</div>
+<div class="compare">
+  <div class="cbox before"><div class="clbl">Stage 1</div>Train on <strong>mob1_30</strong> (month-1 delinquency) · 2024/10 – 2025/07 · 250k samples · captures the most recent short-term risk signal</div>
+  <div class="cbox after"><div class="clbl">Stage 2</div>Continue training on <strong>mob3_30</strong> (month-3 delinquency) · 2024/10 – 2025/05 · longer-horizon label used as regulariser to prevent Stage 1 from overfitting to recent noise</div>
+</div>
+<ul>
+  <li><strong>Why incremental?</strong> New borrower behaviour shifts fast; the original 2-month OOT window was shortened by 1 month to pull the most recent samples into training — ensuring the model sees current patterns</li>
+  <li><strong>Pre-launch validation:</strong> After training, re-fetched data updated to 2025-09 and confirmed degradation was not significant before going live</li>
+</ul>
+<div class="m-sec">Incremental Value Validation</div>
+<ul>
+  <li><strong>Correlation with old model = 0.5:</strong> A correlation of 0.5 means the two models meaningfully disagree on ~half of borderline borrowers — confirming the new model captures genuinely different risk signals. A correlation of 0.9+ would suggest the new model is largely redundant.</li>
+  <li><strong>Cross-matrix ordering:</strong> New model score shows monotonic risk separation within each old-model score band → independent incremental lift confirmed</li>
+</ul>
+<div class="box-green">✓ OOT AUC ~0.61 (cycle-1) · Correlation 0.5 with old model (independent risk dimension confirmed) · Cross-matrix ordering validated → incremental gain over legacy model</div>`
+  },
+  cn: {
+    title: "贷中次新客交易风险模型",
+    sub: "宜人金科 · 贷中风控 · 2025年6月 – 至今",
+    body: `<div class="m-sec">项目概述</div>
+<p>一个针对"次新客"的贷中风控模型——即授信通过后3个月内发生复贷的用户。此类群体天然样本少、行为不稳定、预测难度高。核心挑战在于：次新客行为变动快，若训练集缺失最新样本，模型就无法捕捉当前风险模式。为此采用增量两阶段训练策略——将训练窗口扩展至最新数据，再用长周期标签作为第二阶段的正则化约束，防止过拟合。</p>
+<div class="m-sec">核心指标</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">25万</div><div class="stat-lbl">第一阶段训练样本</div></div>
+  <div class="stat-box"><div class="stat-val">2万</div><div class="stat-lbl">OOT 样本</div></div>
+  <div class="stat-box"><div class="stat-val">~0.61</div><div class="stat-lbl">OOT AUC（第1期标签）</div></div>
+  <div class="stat-box"><div class="stat-val">~0.58</div><div class="stat-lbl">OOT AUC（第3期标签）</div></div>
+  <div class="stat-box"><div class="stat-val">0.5</div><div class="stat-lbl">与旧模型相关性 — 证明捕捉了独立风险维度</div></div>
+</div>
+<div class="m-sec">什么是次新客？</div>
+<ul>
+  <li>授信后 <strong>3 个月内</strong>发生复贷行为的用户 —— 行为极不稳定、样本量少、预测难度远高于普通贷中客户</li>
+  <li>已有专属旧模型，但出现衰减；目标是构建新模型超过旧模型，或在其基础上找到额外增益点</li>
+</ul>
+<div class="m-sec">增量两阶段训练策略</div>
+<div class="compare">
+  <div class="cbox before"><div class="clbl">第一阶段</div>在 <strong>mob1_30</strong>（逾期1期30天）上训练 · 2024/10 – 2025/07 · 25万样本 · 捕捉最新短期风险信号</div>
+  <div class="cbox after"><div class="clbl">第二阶段</div>在 <strong>mob3_30</strong>（逾期3期30天）上继续训练 · 2024/10 – 2025/05 · 用长周期标签作为正则化，防止第一阶段对近期噪声过拟合</div>
+</div>
+<ul>
+  <li><strong>为什么用增量学习？</strong> 次新客行为变动快；将原2个月OOT窗口缩减1个月，将最新样本纳入训练集，确保模型能看到当前风险模式</li>
+  <li><strong>上线前验证：</strong> 训练完成后重新取数至2025-09，确认效果衰减不严重，才正式上线</li>
+</ul>
+<div class="m-sec">增益点验证</div>
+<ul>
+  <li><strong>与旧模型相关性 = 0.5：</strong> 相关性0.5意味着两个模型在约一半边界客户上的判断存在实质性分歧——证明新模型捕捉了与旧模型不同的风险信号。若相关性在0.9以上，新模型则大部分是冗余的。</li>
+  <li><strong>交叉矩阵排序：</strong> 新模型分值在旧模型各分箱内均呈单调风险排序 → 独立增量增益得到验证</li>
+</ul>
+<div class="box-green">✓ OOT AUC ~0.61（第1期）· 与旧模型相关性 0.5（独立风险维度已验证）· 交叉矩阵排序成立 → 增量增益确认</div>`
+  }
+},
+
+y3: {
+  en: {
+    title: "Model Retirement via Knowledge Distillation (2 versions)",
+    sub: "Yiren Digital · Model Lifecycle · Jun 2025 – Present",
+    body: `<div class="m-sec">What is Model Retirement?</div>
+<ul>
+  <li>When a model reaches end-of-life due to feature cost, the team distills it into a new model using current common features — then retires the old model and its associated features</li>
+  <li>Distillation target is the teacher model's <em>score</em> (not raw labels), so high AUC is achievable by design</li>
+</ul>
+<div class="m-sec">Key Metrics</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">0.89–0.92</div><div class="stat-lbl">Distillation AUC (both versions)</div></div>
+  <div class="stat-box"><div class="stat-val">~10%</div><div class="stat-lbl">Recallable rate — ~3–4k customers per month from a base of 30–40k monthly historical rejects (V1)</div></div>
+  <div class="stat-box"><div class="stat-val">3→1</div><div class="stat-lbl">Decision strategies consolidated into one model — 3 retired models (V2)</div></div>
+</div>
+<div class="m-sec">Version 1 — Recall of Historically Rejected Customers</div>
+<div class="pipeline">
+  <span class="p-step">Recent model</span><span class="p-arr">→</span>
+  <span class="p-step">Distill into old feature space</span><span class="p-arr">→</span>
+  <span class="p-step">Score historical rejects</span><span class="p-arr">→</span>
+  <span class="p-step">Bin analysis</span><span class="p-arr">→</span>
+  <span class="p-step">Identify recallable candidates</span>
+</div>
+<ul>
+  <li>Historical rejects were scored under the current model's standards — a customer rejected months ago may now qualify if their risk profile matches today's model</li>
+  <li>Distillation AUC 0.89–0.92; bin analysis shows ~10% of the ~30–40k monthly historical reject pool has recallable space, translating to ~3–4k additional loan candidates per month</li>
+</ul>
+<div class="m-sec">Version 2 — Strategy Consolidation + Operational Use</div>
+<div class="pipeline">
+  <span class="p-step">3 legacy models + decision strategies</span><span class="p-arr">→</span>
+  <span class="p-step">Distill with new features</span><span class="p-arr">→</span>
+  <span class="p-step">1 unified model</span><span class="p-arr">→</span>
+  <span class="p-step">3 old models retired</span><span class="p-arr">→</span>
+  <span class="p-step">Tail-based operations enabled</span>
+</div>
+<ul>
+  <li>3 legacy models, each with complex independent decision logic, were distilled into a single unified model — reducing feature cost and eliminating redundant strategy maintenance</li>
+  <li>Tail segment of the distilled model enables operational actions (e.g. credit limit reduction) on identified high-risk customers, adding a new risk management lever</li>
+</ul>
+<div class="box-green">✓ Both versions AUC 0.89–0.92 · V1: ~3–4k recallable customers per month (10% of historical reject pool) · V2: 3 models + complex strategy chains → 1 unified model, 3 retired</div>`
+  },
+  cn: {
+    title: "过退蒸馏风控模型（两版）",
+    sub: "宜人金科 · 模型生命周期管理 · 2025年6月 – 至今",
+    body: `<div class="m-sec">什么是过退模型？</div>
+<ul>
+  <li>旧模型使用后期，出于特征成本考虑需要下线。团队对旧模型进行知识蒸馏：用新的常用特征训练蒸馏模型，完成后退订老旧特征并下线旧模型</li>
+  <li>蒸馏目标为教师模型的<em>输出分值</em>（非原始标签），因此 AUC 较容易实现高分</li>
+</ul>
+<div class="m-sec">核心指标</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">0.89–0.92</div><div class="stat-lbl">蒸馏 AUC（两版）</div></div>
+  <div class="stat-box"><div class="stat-val">~10%</div><div class="stat-lbl">可捞回率 — 历史每月拒绝客群 30–40 万，约可捞回 3–4 万/月（版本一）</div></div>
+  <div class="stat-box"><div class="stat-val">3→1</div><div class="stat-lbl">3 套决策策略合并为 1 个模型，退订 3 个旧模型（版本二）</div></div>
+</div>
+<div class="m-sec">版本一 — 历史拒绝样本捞回</div>
+<div class="pipeline">
+  <span class="p-step">近期模型</span><span class="p-arr">→</span>
+  <span class="p-step">蒸馏至历史特征空间</span><span class="p-arr">→</span>
+  <span class="p-step">对历史拒绝客户打分</span><span class="p-arr">→</span>
+  <span class="p-step">分箱分析</span><span class="p-arr">→</span>
+  <span class="p-step">识别可捞回候选</span>
+</div>
+<ul>
+  <li>历史拒绝客户在当时被拒，但若以当前模型标准重新评分，其中部分人风险已符合今日的准入要求——这部分人即为可捞回候选</li>
+  <li>蒸馏 AUC 0.89–0.92；分箱分析显示约 10% 的历史拒绝样本存在可捞回空间，基数约 30–40 万/月，可额外释放约 3–4 万贷款候选人/月</li>
+</ul>
+<div class="m-sec">版本二 — 策略整合 + 经营操作</div>
+<div class="pipeline">
+  <span class="p-step">3 个历史模型 + 各自决策策略</span><span class="p-arr">→</span>
+  <span class="p-step">用新特征蒸馏</span><span class="p-arr">→</span>
+  <span class="p-step">1 个统一模型</span><span class="p-arr">→</span>
+  <span class="p-step">3 个旧模型退订</span><span class="p-arr">→</span>
+  <span class="p-step">尾部经营操作启用</span>
+</div>
+<ul>
+  <li>3 个历史模型各有复杂的独立决策逻辑，蒸馏后合并为 1 个统一模型——降低特征成本，消除冗余的策略维护负担</li>
+  <li>蒸馏模型尾部样本可触发降额等经营操作，为高风险客户管理新增主动干预手段</li>
+</ul>
+<div class="box-green">✓ 两版 AUC 均在 0.89–0.92 · 版本一：约 3–4 万可捞回客户/月（历史拒绝池的 10%）· 版本二：3 个模型 + 复杂策略链 → 1 个统一模型，3 个旧模型退订</div>`
+  }
+},
+
+y4: {
+  en: {
+    title: "Recovery Prediction Model (Delinquency Flow-in)",
+    sub: "Yiren Digital · Incremental Risk Signal · Jun 2025 – Present",
+    body: `<div class="m-sec">Why a "Flow-in Recovery" Model?</div>
+<ul>
+  <li>Standard risk models label customers as good/bad based on delinquency, but "good" customers often show 1–n day delinquency followed by repayment</li>
+  <li><strong>Flow-in customers</strong> (1–3 days delinquent) may simply have forgotten to pay — but research shows: those who <em>frequently</em> flow in convert to genuine bad customers at a significantly higher rate</li>
+  <li>Goal: predict whether a flow-in customer will fully recover → splits the flow-in population from a new angle, providing incremental signal beyond the standard risk model</li>
+</ul>
+<div class="m-sec">Key Metrics</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">440k</div><div class="stat-lbl">Training samples (all channels)</div></div>
+  <div class="stat-box"><div class="stat-val">67k</div><div class="stat-lbl">OOT samples</div></div>
+  <div class="stat-box"><div class="stat-val">0.62–0.70</div><div class="stat-lbl">New model OOT AUC (6 labels, old model baseline ~0.60–0.68)</div></div>
+  <div class="stat-box"><div class="stat-val">+0.01–0.02</div><div class="stat-lbl">AUC gain vs old model — consistent across all 6 labels</div></div>
+</div>
+<div class="m-sec">Sample Design</div>
+<div class="compare">
+  <div class="cbox before"><div class="clbl">Train</div>2024/10 – 2025/08 · All channels 440k · Target channels 210k</div>
+  <div class="cbox after"><div class="clbl">OOT</div>2025/09 – 2025/10 · All channels 67k · Target channels 53k</div>
+</div>
+<div class="m-sec">Label & Evaluation</div>
+<ul>
+  <li><strong>Label:</strong> Whether the borrower repays in full across 3 consecutive months — fails to repay in any month = at-risk (0); fully recovered = (1)</li>
+  <li><strong>6 AUC metrics:</strong> observed at month 1 and month 3 post-delinquency, each across 3-day / 10-day / 30-day recovery windows</li>
+  <li><strong>New vs old:</strong> New model OOT AUC 0.62–0.70; old model baseline ~0.60–0.68. In production credit risk models, a gain of 0.01–0.02 sustained consistently across all 6 evaluation labels is considered meaningful — it represents improved ranking of the highest-risk flow-in customers, directly influencing collection priority decisions</li>
+</ul>
+<div class="box-green">✓ OOT AUC 0.62–0.70 (old model baseline ~0.60–0.68) · +0.01–0.02 gain consistent across all 6 labels · Cross-model analysis confirms independent ordering → incremental gain validated</div>`
+  },
+  cn: {
+    title: "回收预测模型（流入客群）",
+    sub: "宜人金科 · 增量风险信号 · 2025年6月 – 至今",
+    body: `<div class="m-sec">为什么需要流入回收模型？</div>
+<ul>
+  <li>常规风险模型以逾期与否为标签，识别出的"优质客户"中常存在逾期 1～n 天后还款的现象</li>
+  <li><strong>流入客户</strong>（逾期 1～3 天）可能只是疏忽未还 —— 但研究发现：<em>频繁流入</em>的人群在 n 月后转化为真实坏人的概率显著更高</li>
+  <li>目标：预测流入客户是否能够回收，从另一维度拆分流入群体，为常规风险识别提供独立增量信号</li>
+</ul>
+<div class="m-sec">核心指标</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">44万</div><div class="stat-lbl">训练样本（全渠道）</div></div>
+  <div class="stat-box"><div class="stat-val">6.7万</div><div class="stat-lbl">OOT 样本</div></div>
+  <div class="stat-box"><div class="stat-val">0.62–0.70</div><div class="stat-lbl">新模型 OOT AUC（6 个标签，旧模型 baseline 约 0.60–0.68）</div></div>
+  <div class="stat-box"><div class="stat-val">+0.01–0.02</div><div class="stat-lbl">相较旧模型 AUC 提升 — 6 个标签上均一致</div></div>
+</div>
+<div class="m-sec">样本设计</div>
+<div class="compare">
+  <div class="cbox before"><div class="clbl">训练集</div>2024/10 – 2025/08 · 全渠道 44万 · 投放渠道 21万</div>
+  <div class="cbox after"><div class="clbl">OOT</div>2025/09 – 2025/10 · 全渠道 6.7万 · 投放渠道 5.3万</div>
+</div>
+<div class="m-sec">标签与评估</div>
+<ul>
+  <li><strong>标签：</strong>连续3个月内是否全额回收（任意一月失败=0，全部回收=1）</li>
+  <li><strong>6 个 AUC 指标：</strong>在逾期后第1月和第3月两个观测点，分别评估3天/10天/30天回收率，覆盖不同时间粒度</li>
+  <li><strong>新 vs 旧：</strong>新模型 OOT AUC 0.62–0.70，旧模型 baseline 约 0.60–0.68。在生产信贷模型中，0.01–0.02 的 AUC 提升若在全部 6 个评估标签上均一致呈现，具有实际意义——它直接影响流入客群的风险排序，进而影响催收优先级决策</li>
+</ul>
+<div class="box-green">✓ OOT AUC 0.62–0.70（旧模型 baseline 约 0.60–0.68）· 6 个标签上均一致提升 0.01–0.02 · 交叉分析排序明显 → 增益点得到验证</div>`
+  }
+},
+
+y5: {
+  en: {
+    title: "Rapid Transition Model",
+    sub: "Yiren Digital · Credit Risk · Dec 2025",
+    body: `<div class="m-sec">Project Overview</div>
+<p>A bridge credit risk model built in 2 weeks to replace a decaying model while a major new version was under development. The goal was to improve identification of the highest-quality customers (head segment) and raise the pass rate by ~3% as a temporary measure.</p>
+<div class="m-sec">Key Metrics</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">820k</div><div class="stat-lbl">Training samples</div></div>
+  <div class="stat-box"><div class="stat-val">~0.02</div><div class="stat-lbl">OOT AUC gain</div></div>
+  <div class="stat-box"><div class="stat-val">0.8%</div><div class="stat-lbl">New swap-in sample risk</div></div>
+  <div class="stat-box"><div class="stat-val">1.6%</div><div class="stat-lbl">Overall pool risk</div></div>
+  <div class="stat-box"><div class="stat-val">2 weeks</div><div class="stat-lbl">Delivery time</div></div>
+</div>
+<div class="m-sec">Context</div>
+<ul>
+  <li>Old model experienced performance degradation; a major version was in development — needed a quick <strong>transition model in 2 weeks</strong> to bridge the gap</li>
+  <li>Primary goal: improve <strong>head-segment customer identification</strong> and increase pass rate by ~3%</li>
+</ul>
+<div class="m-sec">Approach: Feature Combinations + Bad-sample Weighting</div>
+<div class="pipeline">
+  <span class="p-step">Baseline (decaying)</span><span class="p-arr">→</span>
+  <span class="p-step">5 feature combinations tested</span><span class="p-arr">→</span>
+  <span class="p-step">Bad-sample weighting</span><span class="p-arr">→</span>
+  <span class="p-step">3-label AUC comparison</span><span class="p-arr">→</span>
+  <span class="p-step">Best version deployed</span>
+</div>
+<ul>
+  <li><strong>Feature experiments (5 versions):</strong> +strong feature 1 → strong feature 2 update → +strong feature 3 → drop strong feature 4 → multi-head weight adjustment</li>
+  <li><strong>Bad-sample weighting:</strong> Applied 1.4–1.6× penalty weight to borrowers holding 5+ concurrent loans — empirically validated to sharpen high-quality customer ordering</li>
+  <li><strong>Evaluation:</strong> AUC compared across all versions using three delinquency labels (15-day at month 1 / 30-day at month 3 / 30-day at month 6); best overall selected</li>
+  <li><strong>Train:</strong> 820k (2025.01–09); OOT: 30k (2025.10–11)</li>
+</ul>
+<div class="compare">
+  <div class="cbox before"><div class="clbl">Old model</div>Head ordering degraded · swap-in sample risk ≈ pool average</div>
+  <div class="cbox after"><div class="clbl">New model</div>Head ordering improved · new swap-in risk 0.8% vs pool 1.6%</div>
+</div>
+<div class="box-green">✓ OOT AUC +~0.02 · New swap-in sample risk 0.8% vs pool 1.6% — genuinely low-risk customers gained · Delivered in 2 weeks as planned transition</div>`
+  },
+  cn: {
+    title: "快速过渡交易风险模型",
+    sub: "宜人金科 · 信贷风控 · 2025年12月",
+    body: `<div class="m-sec">项目概述</div>
+<p>一个在2周内快速交付的过渡信贷风控模型，旨在旧模型衰减、大版本仍在开发期间提供桥接。主要目标：提升头部优质客户的识别效果，通过率预期提高约3%。</p>
+<div class="m-sec">核心指标</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">82万</div><div class="stat-lbl">训练样本</div></div>
+  <div class="stat-box"><div class="stat-val">~0.02</div><div class="stat-lbl">OOT AUC 提升</div></div>
+  <div class="stat-box"><div class="stat-val">0.8%</div><div class="stat-lbl">新换入样本风险率</div></div>
+  <div class="stat-box"><div class="stat-val">1.6%</div><div class="stat-lbl">样本池整体风险率</div></div>
+  <div class="stat-box"><div class="stat-val">2周</div><div class="stat-lbl">交付时间</div></div>
+</div>
+<div class="m-sec">背景</div>
+<ul>
+  <li>旧模型衰减，大版本正在开发中 —— 需在 <strong>2 周内</strong>快速迭代一个过渡版本上线</li>
+  <li>主要目标：提升<strong>头部客户识别效果</strong>，期望提高约 3% 通过率</li>
+</ul>
+<div class="m-sec">方案：特征组合实验 + 坏样本加权</div>
+<div class="pipeline">
+  <span class="p-step">旧模型（衰减）</span><span class="p-arr">→</span>
+  <span class="p-step">5 版特征组合对比</span><span class="p-arr">→</span>
+  <span class="p-step">坏样本加权</span><span class="p-arr">→</span>
+  <span class="p-step">三标签 AUC 评估</span><span class="p-arr">→</span>
+  <span class="p-step">最优版本上线</span>
+</div>
+<ul>
+  <li><strong>特征实验（5 版）：</strong>增加强特征1 → 更新强特征2 → 增加强特征3 → 去除强特征4 → 多头借贷用户权重调整</li>
+  <li><strong>坏样本加权：</strong>对同时持有5笔以上贷款的高风险借款人施加 1.4–1.6 倍惩罚权重，经验证可提升头部排序效果</li>
+  <li><strong>评估：</strong>各版本按三个逾期标签（逾期1月15天 / 逾期3月30天 / 逾期6月30天）对比 AUC，选综合最优版本</li>
+  <li><strong>数据：</strong>82万（2025.01–09）；OOT 约 3万（2025.10–11）</li>
+</ul>
+<div class="compare">
+  <div class="cbox before"><div class="clbl">旧模型</div>头部排序衰减 · 换入样本风险接近样本池均值</div>
+  <div class="cbox after"><div class="clbl">新模型</div>头部排序改善 · 新换入样本风险 0.8% vs 样本池 1.6%</div>
+</div>
+<div class="box-green">✓ OOT AUC 提升 ~0.02 · 新换入样本风险 0.8% vs 样本池 1.6%，换入客群为真实低风险 · 2 周内按计划交付</div>`
+  }
+},
+
+y6: {
+  en: {
+    title: "Credit Bureau Feature Analysis & Data Warehouse Rebuild",
+    sub: "Yiren Digital · Data Quality · 2025",
+    body: `<div class="m-sec">Project Overview</div>
+<p>A data quality investigation that uncovered a systematic blind spot across all credit risk models: when all third-party credit bureau features return empty, the system had been defaulting to treating the borrower as having no credit history — but these customers are in fact extremely high-risk. The project reduced 818 credit bureau features to 12 core indicators and rebuilt the feature layer used by all downstream models.</p>
+<div class="m-sec">Key Metrics</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">2.66M</div><div class="stat-lbl">Pass samples (2025)</div></div>
+  <div class="stat-box"><div class="stat-val">4.5M</div><div class="stat-lbl">Apply samples (3 months)</div></div>
+  <div class="stat-box"><div class="stat-val">818→12</div><div class="stat-lbl">Features after reduction</div></div>
+  <div class="stat-box"><div class="stat-val">1.4x–3.9x</div><div class="stat-lbl">First-cycle 7-day delinquency Lift (missing-data segment)</div></div>
+</div>
+<div class="m-sec">Pipeline</div>
+<div class="pipeline">
+  <span class="p-step">Discover all-empty risk</span><span class="p-arr">→</span>
+  <span class="p-step">818 credit bureau features</span><span class="p-arr">→</span>
+  <span class="p-step">Recursive reduction</span><span class="p-arr">→</span>
+  <span class="p-step">12 core features</span><span class="p-arr">→</span>
+  <span class="p-step">Channel drill-down</span><span class="p-arr">→</span>
+  <span class="p-step">Risk stratification</span><span class="p-arr">→</span>
+  <span class="p-step">DW rebuild</span>
+</div>
+<div class="m-sec">Details</div>
+<ul>
+  <li><strong>Key insight:</strong> When ALL credit bureau features are empty, the system defaults to 0 ("no borrow history") — but analysis revealed this segment has extreme high risk (first-cycle 7-day delinquency Lift 1.4x–3.9x), a systematic blind spot in all downstream models</li>
+  <li><strong>Feature reduction:</strong> 12 core features fully replicate missing-data logic of all 818 originals; cross-validated vs official credit bureau report (0.264% vs 0.27%, &lt;0.01% error)</li>
+  <li><strong>Channel breakdown:</strong> Missing rate varied significantly across channels (range: near 0% to 0.85%)</li>
+  <li><strong>Risk driver:</strong> Missing ID = high risk (month-1 30-day delinquency Lift 0–3.6×); missing phone = near-normal; risk elevated post-2025-08</li>
+  <li><strong>DW rebuild:</strong> 12-feature logic written to team production credit bureau feature library — all downstream models auto-identify missing-data high-risk samples</li>
+</ul>
+<div class="box-amber">⚠ "All-empty = default 0" was a systematic risk blind spot across all models using credit bureau features</div>
+<div class="box-green">✓ Production feature library updated · All downstream models auto-flag missing-data high-risk samples</div>`
+  },
+  cn: {
+    title: "第三方征信特征未查得分析与数仓重构",
+    sub: "宜人金科 · 数据质量 · 2025年",
+    body: `<div class="m-sec">项目概述</div>
+<p>一项数据质量专项研究，发现了所有下游信贷风控模型共同存在的系统性盲区：第三方征信所有特征全部为空时，系统默认视为"无借款信息"——而这类客户实际上风险极高。本项目将818个征信特征缩减为12个核心指标，并重构了所有下游模型依赖的特征数据层。</p>
+<div class="m-sec">核心指标</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">266万</div><div class="stat-lbl">通过样本（2025全年）</div></div>
+  <div class="stat-box"><div class="stat-val">450万</div><div class="stat-lbl">申请样本（近三月）</div></div>
+  <div class="stat-box"><div class="stat-val">818→12</div><div class="stat-lbl">递归缩减后特征</div></div>
+  <div class="stat-box"><div class="stat-val">1.4x–3.9x</div><div class="stat-lbl">首期7天逾期 Lift（征信缺失群体）</div></div>
+</div>
+<div class="m-sec">分析流程</div>
+<div class="pipeline">
+  <span class="p-step">发现全量为空高风险</span><span class="p-arr">→</span>
+  <span class="p-step">818 个征信特征</span><span class="p-arr">→</span>
+  <span class="p-step">递归缩减</span><span class="p-arr">→</span>
+  <span class="p-step">12 个核心特征</span><span class="p-arr">→</span>
+  <span class="p-step">渠道下钻</span><span class="p-arr">→</span>
+  <span class="p-step">风险分层</span><span class="p-arr">→</span>
+  <span class="p-step">数仓重构落地</span>
+</div>
+<div class="m-sec">详细说明</div>
+<ul>
+  <li><strong>核心发现：</strong>第三方征信所有特征全部为空时，系统默认处理为 0（"无借款信息"），但分析发现此类样本风险极高（首期7天逾期 Lift 1.4x–3.9x），是所有下游模型的系统性风险盲区</li>
+  <li><strong>特征缩减：</strong>12 个核心特征能完整还原 818 个特征的未查得判断逻辑；与征信机构官方报告交叉验证（0.264% vs 0.27%，误差 &lt;0.01%）</li>
+  <li><strong>渠道拆解：</strong>不同贷款渠道未查得率差异显著（最高 0.85%，最低接近 0%）</li>
+  <li><strong>风险驱动：</strong>缺身份证号为主要风险驱动（逾期1月30天 Lift 0–3.6×）；缺手机号风险接近正常；2025-08 后风险水位显著升高</li>
+  <li><strong>数仓重构：</strong>12 个特征的未查得判断逻辑写入团队生产征信特征库，成为最常用基础特征表之一</li>
+</ul>
+<div class="box-amber">⚠「全量为空默认为 0」在所有使用征信特征的模型中造成系统性风险盲区</div>
+<div class="box-green">✓ 生产特征库已更新 · 所有后续模型自动识别未查得高风险样本</div>`
+  }
+},
+
+y7: {
+  en: {
+    title: "ModelReport Automated Reporting System",
+    sub: "Yiren Digital · Internal Tooling · Mar 2025 – Present",
+    body: `<div class="m-sec">What is ModelReport?</div>
+<p>After building a risk model, analysts manually compute performance metrics, visualise score distributions, and check feature stability — a repetitive process taking hours per model. ModelReport is a Python class I built from scratch that automates the entire post-modelling analysis into a single call, producing a complete Excel report package covering model performance, feature health, and cross-model comparison, parallelised across all customer segments.</p>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">6</div><div class="stat-lbl">Analysis modules</div></div>
+  <div class="stat-box"><div class="stat-val">2–3h → 20min</div><div class="stat-lbl">Reporting time per model</div></div>
+</div>
+<div class="m-sec">Pipeline</div>
+<div class="pipeline">
+  <span class="p-step">Load data once</span><span class="p-arr">→</span>
+  <span class="p-step">Feature importance</span><span class="p-arr">→</span>
+  <span class="p-step">Performance report</span><span class="p-arr">→</span>
+  <span class="p-step">Cross-model comparison</span><span class="p-arr">→</span>
+  <span class="p-step">Feature health checks</span><span class="p-arr">→</span>
+  <span class="p-step">Excel output</span>
+</div>
+<div class="m-sec">6 Modules</div>
+<ul>
+  <li><strong>main_analysis:</strong> Core performance report — tracks AUC/KS/Lift/bad rate month by month across each customer segment, with score distribution and borrower profile breakdowns. Optionally overlays a baseline model to show exactly where the new model improves.</li>
+  <li><strong>model_cross:</strong> Places two model scores in a grid to reveal where they agree and disagree — the standard method for proving a new model adds incremental value beyond an existing one.</li>
+  <li><strong>export_feature_importance:</strong> Ranks which input features the model relies on most, merged with a human-readable feature description dictionary. The ranked list feeds directly into the feature health checks below.</li>
+  <li><strong>export_woe_analysis:</strong> Groups each feature into risk-ordered buckets and shows how those groupings shift across time — key for detecting features that are losing predictive power.</li>
+  <li><strong>export_psi_analysis:</strong> Monitors how stable each feature and model score is day by day, with drift visualisations — an early-warning system for model degradation before it shows up in live metrics.</li>
+  <li><strong>export_eda_analysis:</strong> Data health check: missing rates, distribution statistics, and monthly trends for the top features — catches data quality issues upstream of modelling.</li>
+</ul>
+<div class="m-sec">Key Engineering Decisions</div>
+<ul>
+  <li><strong>Configurable schema:</strong> Column names passed via a config object, not hardcoded — the same class works across different model datasets without any code changes.</li>
+  <li><strong>Consistent binning:</strong> All time periods use the same score bin cutpoints, so month-over-month performance trends are genuinely comparable rather than an artefact of shifting bins.</li>
+  <li><strong>Auto score direction:</strong> Automatically detects and corrects if a model scores risk in the wrong direction — removes a common source of silent errors.</li>
+</ul>
+<div class="box-green">✓ Built from scratch · Adopted as team standard reporting tool · Shipped with full 15KB usage documentation</div>`
+  },
+  cn: {
+    title: "ModelReport 自动化模型报告系统",
+    sub: "宜人金科 · 内部工具 · 2025年3月 – 至今",
+    body: `<div class="m-sec">ModelReport 是什么？</div>
+<p>建完风控模型后，分析师需要手动计算各类指标、出图、按客群分段分析——重复且耗时。ModelReport 是我从零开发的 Python 类，把建模后的全套分析自动化为一次调用，生成涵盖模型表现、特征健康度和模型对比的完整 Excel 报告包，并在各客群之间并行执行。</p>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">6</div><div class="stat-lbl">分析模块</div></div>
+  <div class="stat-box"><div class="stat-val">2–3小时 → 20分钟</div><div class="stat-lbl">每次出报告耗时</div></div>
+</div>
+<div class="m-sec">执行流程</div>
+<div class="pipeline">
+  <span class="p-step">数据一次加载</span><span class="p-arr">→</span>
+  <span class="p-step">特征重要性</span><span class="p-arr">→</span>
+  <span class="p-step">模型表现报告</span><span class="p-arr">→</span>
+  <span class="p-step">模型交叉对比</span><span class="p-arr">→</span>
+  <span class="p-step">特征健康检查</span><span class="p-arr">→</span>
+  <span class="p-step">Excel 输出</span>
+</div>
+<div class="m-sec">6 大模块</div>
+<ul>
+  <li><strong>main_analysis：</strong>核心表现报告——按客群逐月追踪 AUC/KS/Lift/坏率，含分箱分布和借款人画像。可叠加基准模型对比，直观展示新模型在哪些方面有提升。</li>
+  <li><strong>model_cross：</strong>将两个模型的评分放入网格，显示二者一致和分歧的区域——验证新模型在现有模型基础上是否有增益的标准方法。</li>
+  <li><strong>export_feature_importance：</strong>输出模型最依赖的特征排名，与人工可读的特征描述字典合并——排名结果直接作为下游特征健康检查的输入。</li>
+  <li><strong>export_woe_analysis：</strong>将每个特征按风险高低分组，并展示这些分组随时间如何变化——用于发现逐渐失效的特征。</li>
+  <li><strong>export_psi_analysis：</strong>逐日监控每个特征和模型分的稳定性，含漂移可视化——在线上指标恶化之前提供模型退化的早期预警。</li>
+  <li><strong>export_eda_analysis：</strong>数据健康检查：主要特征的缺失率、分布统计和逐月趋势——在建模前上游捕获数据质量问题。</li>
+</ul>
+<div class="m-sec">关键工程决策</div>
+<ul>
+  <li><strong>可配置字段名：</strong>列名通过配置对象传入而非硬编码——同一套代码可直接适配不同模型的数据结构，无需修改代码。</li>
+  <li><strong>统一分箱基准：</strong>所有时间段使用相同的评分分箱切点——保证跨月表现趋势是真实可比的，而非分箱变动带来的假象。</li>
+  <li><strong>评分方向自动校正：</strong>自动检测并修正模型评分方向错误——消除一类常见的静默错误。</li>
+</ul>
+<div class="box-green">✓ 从零构建 · 已成为团队标准报告工具 · 附完整 15KB 使用说明书</div>`
+  }
+},
+
+y8: {
+  en: {
+    title: "Standardized Modeling Toolkit (model_method)",
+    sub: "Yiren Digital · Shared Pipeline · Jun 2025 – Present",
+    body: `<div class="m-sec">What is model_method?</div>
+<p>A shared end-to-end modeling toolkit I built from scratch that standardises every stage of the credit risk workflow: data pull, feature screening, model training, deployment, and monitoring. The same pipeline reuses across all model types — first-loan, in-loan, recovery, model retirement — by simply swapping the label and feature set. No repeated setup per project.</p>
+<div class="m-sec">Key Metrics</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">15k+</div><div class="stat-lbl">Candidate features screened per build — processed in parallel batches, no manual looping</div></div>
+  <div class="stat-box"><div class="stat-val">~2.5h</div><div class="stat-lbl">Fully automated EDA runtime across 15k+ features — zero manual intervention on 3M+ samples</div></div>
+  <div class="stat-box"><div class="stat-val">4</div><div class="stat-lbl">Production model types built on this pipeline (first-loan, in-loan, recovery, model retirement)</div></div>
+</div>
+<div class="m-sec">End-to-end Pipeline (7 stages)</div>
+<div class="pipeline">
+  <span class="p-step">PySpark / Hive pull</span><span class="p-arr">→</span>
+  <span class="p-step">EDA feature metrics</span><span class="p-arr">→</span>
+  <span class="p-step">Missing/PSI/IV/tree/corr filter</span><span class="p-arr">→</span>
+  <span class="p-step">LightGBM warm-start</span><span class="p-arr">→</span>
+  <span class="p-step">Deployment interface</span><span class="p-arr">→</span>
+  <span class="p-step">Deploy & backtest scoring</span><span class="p-arr">→</span>
+  <span class="p-step">Monitoring</span>
+</div>
+<div class="m-sec">Engineering Details</div>
+<ul>
+  <li><strong>Data pull:</strong> Fetches data from the company's big-data warehouse (Hive) via PySpark, joining across multiple tables with dynamic scaling (20–80 compute nodes); downloads locally as compressed columnar files</li>
+  <li><strong>EDAProcessor:</strong> 15k+ features computed in parallel batches — computes monthly missing rate / IV / PSI / tree importance / correlation for risk and application samples; ~2.5h runtime on 3M samples, fully automated</li>
+  <li><strong>filter_features_hard:</strong> Multi-field voting (≥2/3 months must pass threshold → keep), more robust than single-threshold; records elimination reason per step for traceability</li>
+  <li><strong>LightGBM:</strong> Two-phase warm-start to identify essential base features and incorporate model scores as strong predictors; feature penalty suppresses 3rd-party score dependency; sample weighting for imbalanced risk groups</li>
+  <li><strong>Deploy & monitoring:</strong> Output standardized deployment interface; run backtest scoring on historical samples post-deploy; track monthly AUC drift / PSI / bad rate via ModelReport</li>
+</ul>
+<div class="box-green">✓ Built to eliminate repetitive setup: swap the label and feature set, the full 7-stage workflow reuses across all 4 production model types — data pull, EDA, filtering, training, deployment, and monitoring all standardised in one place</div>`
+  },
+  cn: {
+    title: "建模标准化工具链（model_method）",
+    sub: "宜人金科 · 通用流水线 · 2025年6月 – 至今",
+    body: `<div class="m-sec">model_method 是什么？</div>
+<p>我从零开发的端到端建模标准化工具链，覆盖信贷风控建模全流程：取数、特征筛选、模型训练、上线与监控。通过只替换标签和特征集，同一套流水线即可在所有模型类型（首贷/贷中/回收/过退）中完整复用，无需每次重复搭建环境。</p>
+<div class="m-sec">核心指标</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">15k+</div><div class="stat-lbl">每次构建筛选的候选特征数 — 并行分批处理，无需手动循环</div></div>
+  <div class="stat-box"><div class="stat-val">~2.5小时</div><div class="stat-lbl">300万+样本上全自动 EDA 完成时间 — 无需人工干预，覆盖 15k+ 特征</div></div>
+  <div class="stat-box"><div class="stat-val">4</div><div class="stat-lbl">复用此流水线的生产模型类型（首贷/贷中/回收/过退）</div></div>
+</div>
+<div class="m-sec">端到端流水线（7 阶段）</div>
+<div class="pipeline">
+  <span class="p-step">PySpark / Hive 取数</span><span class="p-arr">→</span>
+  <span class="p-step">EDA 特征指标计算</span><span class="p-arr">→</span>
+  <span class="p-step">缺失率/PSI/IV/树模型/相关性筛选</span><span class="p-arr">→</span>
+  <span class="p-step">LightGBM warm-start</span><span class="p-arr">→</span>
+  <span class="p-step">输出上线接口</span><span class="p-arr">→</span>
+  <span class="p-step">上线回溯打分</span><span class="p-arr">→</span>
+  <span class="p-step">模型监控</span>
+</div>
+<div class="m-sec">工程细节</div>
+<ul>
+  <li><strong>取数：</strong>通过 PySpark 从公司大数据仓库（Hive）取数，跨多张表关联，动态调度 20–80 个计算节点，下载为本地列式压缩文件</li>
+  <li><strong>EDAProcessor：</strong>15k+ 特征并行分批计算，逐月输出缺失率/IV/PSI/树模型重要性/相关性；300万样本约 2.5 小时全自动完成，无需人工干预</li>
+  <li><strong>filter_features_hard：</strong>多字段投票逻辑（≥2/3 月份达标才保留），比单一阈值更稳健；每步记录剔除原因可追溯</li>
+  <li><strong>LightGBM：</strong>两阶段 warm-start 确认基础特征，加入模型分（强特征）；feature penalty 压制三方评分依赖；样本加权处理风险群体不平衡</li>
+  <li><strong>上线监控：</strong>输出标准化上线接口；上线后回溯打分验证效果；通过 ModelReport 跟踪月度 AUC 漂移 / PSI / 各段坏率</li>
+</ul>
+<div class="box-green">✓ 消除重复搭建成本：只需替换标签和特征集，7 阶段完整流水线在 4 种生产模型类型中全量复用 — 取数、EDA、筛选、训练、上线、监控全部标准化</div>`
+  }
+},
+
+t1: {
+  en: {
+    title: "NLP Alpha Factor Research",
+    sub: "Tianbao Private Equity · NLP Quant · Sep 2024 – May 2025",
+    body: `<div class="m-sec">Project Overview</div>
+<p>A quantitative alpha research project exploring whether financial news and stock commentary carry predictive signal for future returns. News and comment text is converted to vector representations using a pre-trained encoder, then a GRU model is trained to predict 1-day and 5-day forward returns across all ~5,000 A-share stocks (IC = Information Coefficient, measuring factor predictiveness).</p>
+<div class="m-sec">Key Metrics</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">0.16</div><div class="stat-lbl">5-day IC</div></div>
+  <div class="stat-box"><div class="stat-val">0.08</div><div class="stat-lbl">1-day IC</div></div>
+  <div class="stat-box"><div class="stat-val">5,000</div><div class="stat-lbl">Stocks (A-share universe)</div></div>
+  <div class="stat-box"><div class="stat-val">2010–2024</div><div class="stat-lbl">Data span</div></div>
+  <div class="stat-box"><div class="stat-val">~90%</div><div class="stat-lbl">Data loading latency cut — epoch time 30 min → ~3 min, freeing GPU from idle data-wait</div></div>
+</div>
+<div class="m-sec">Full Pipeline</div>
+<div class="pipeline">
+  <span class="p-step">News API + custom crawler</span><span class="p-arr">→</span>
+  <span class="p-step">Text embedding (768-dim, parallelised)</span><span class="p-arr">→</span>
+  <span class="p-step">Cosine dedup</span><span class="p-arr">→</span>
+  <span class="p-step">Daily vector aggregation</span><span class="p-arr">→</span>
+  <span class="p-step">Optimised time-series indexing</span><span class="p-arr">→</span>
+  <span class="p-step">GRU (MSE / IC loss)</span><span class="p-arr">→</span>
+  <span class="p-step">IC evaluation</span>
+</div>
+<div class="m-sec">Data & Preprocessing</div>
+<ul>
+  <li><strong>Dual sources:</strong> 3rd-party news API (daily push, purchased feed); stock comments from public platforms via self-built crawler — captures data the vendor does not cover</li>
+  <li><strong>Batch embedding:</strong> Pre-trained text encoder converts each article into a 768-dimensional vector; computation parallelised across all stocks</li>
+  <li><strong>Denoising:</strong> Cosine similarity filter removes near-duplicate comments and low-quality noise before aggregation</li>
+  <li><strong>Daily aggregation:</strong> Multiple texts per stock per day → averaged into one vector. Alternatives considered: time / likes / readcount-weighted average; linear layer for learned aggregation weights (deferred — compute overhead too high at idea-test stage)</li>
+  <li><strong>Text volume:</strong> 5+ comments/stock/day (from 2015); 100+ comments/stock/day (from 2020)</li>
+</ul>
+<div class="m-sec">Modeling & Engineering</div>
+<ul>
+  <li><strong>Optimised time-series indexing:</strong> Training on 5,000 stocks × 14 years of daily data, the original naive window-scanning approach meant the GPU sat idle waiting for data — each epoch took ~30 minutes, making iteration effectively impossible. Reengineered to precompute all window positions as index arrays upfront; the DataLoader then fetches directly by index with no repeated scanning. Epoch time dropped from ~30 min to ~3 min (~90% reduction), and GPU compute became the actual bottleneck rather than data loading.</li>
+  <li><strong>GRU over LSTM / Transformer:</strong> GRU has 2 gates vs LSTM's 3 → better compute efficiency; short-window news impact supported by literature; idea-test phase favors simplicity over architecture complexity. Also benchmarked RWKV — linear-attention variant — which did not outperform GRU on daily return prediction</li>
+  <li><strong>Loss functions:</strong> Compared MSE loss and IC loss; applied separate normalization to labels and features</li>
+</ul>
+<div class="m-sec">Known Improvement Directions</div>
+<ul>
+  <li>Stronger embedding model — initial choice was arbitrary (lightweight speed); domain-specific model would likely improve representation quality</li>
+  <li>Weighted aggregation (recency / engagement) instead of simple average</li>
+  <li>Add lagged returns or price-volume features to help the model detect whether alpha is already priced into the market</li>
+</ul>
+<div class="box-green">✓ Confirmed embedding features carry valid alpha signal · 5-day IC 0.16 across full A-share universe</div>`
+  },
+  cn: {
+    title: "NLP Alpha 因子研究",
+    sub: "天宝私募基金 · NLP 量化 · 2024年9月 – 2025年5月",
+    body: `<div class="m-sec">项目概述</div>
+<p>一项探索金融新闻与股票评论对未来收益是否具有预测价值的量化 Alpha 研究。通过预训练文本编码器将新闻/评论转为向量表示，输入 GRU 模型预测全A股约5000只股票的1日和5日后续收益率（IC = Information Coefficient，衡量因子预测能力的标准量化指标）。</p>
+<div class="m-sec">核心指标</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">0.16</div><div class="stat-lbl">5 日 IC</div></div>
+  <div class="stat-box"><div class="stat-val">0.08</div><div class="stat-lbl">1 日 IC</div></div>
+  <div class="stat-box"><div class="stat-val">5000只</div><div class="stat-lbl">全 A 股覆盖</div></div>
+  <div class="stat-box"><div class="stat-val">2010–2024</div><div class="stat-lbl">数据跨度</div></div>
+  <div class="stat-box"><div class="stat-val">~90%</div><div class="stat-lbl">数据加载延迟降低 — epoch 时间从 30 分钟压缩至约 3 分钟，GPU 算力从等待数据中释放</div></div>
+</div>
+<div class="m-sec">完整 Pipeline</div>
+<div class="pipeline">
+  <span class="p-step">新闻 API + 自建爬虫</span><span class="p-arr">→</span>
+  <span class="p-step">文本向量化（768维，并行）</span><span class="p-arr">→</span>
+  <span class="p-step">余弦去噪</span><span class="p-arr">→</span>
+  <span class="p-step">日频向量聚合</span><span class="p-arr">→</span>
+  <span class="p-step">优化时序索引</span><span class="p-arr">→</span>
+  <span class="p-step">GRU（MSE / IC loss）</span><span class="p-arr">→</span>
+  <span class="p-step">IC 评估</span>
+</div>
+<div class="m-sec">数据与预处理</div>
+<ul>
+  <li><strong>双数据源：</strong>第三方新闻数据商 API（每日推送，购买）；股票评论通过自建爬虫框架从公开平台采集，覆盖数据商未收录的数据源</li>
+  <li><strong>批量向量化：</strong>预训练文本编码器将每条新闻/评论转为 768 维向量，对所有股票并行计算</li>
+  <li><strong>去噪：</strong>余弦相似度过滤高度重复评论，聚合前去除低质量噪声</li>
+  <li><strong>日频聚合：</strong>同一股票同一天多条文本 → 简单平均为单一向量。备选方案：按时间/点赞/阅读量加权；线性层自学习聚合权重（因 idea test 阶段计算开销过大暂缓）</li>
+  <li><strong>文本量：</strong>2015 年起每股每日至少 5 条评论；2020 年后增至上百条</li>
+</ul>
+<div class="m-sec">建模与工程</div>
+<ul>
+  <li><strong>优化时序索引：</strong>在 5000 只股票 × 14 年日度数据的规模下，原始逐窗口循环扫描导致 GPU 大量时间空转等待数据——每个 epoch 约需 30 分钟，模型迭代几乎无法进行。改为提前预计算所有窗口的位置索引，DataLoader 直接按索引定位取数，无需重复扫描。epoch 时间从 30 分钟压缩至约 3 分钟（降低 ~90%），GPU 算力得到有效利用，不再是数据加载的瓶颈。</li>
+  <li><strong>选 GRU 而非 LSTM / Transformer：</strong>GRU 2 个 gate vs LSTM 3 个 → 计算效率更高；文献支持新闻影响在短窗口内显现；idea test 阶段偏好简洁架构。同时验证了 RWKV（线性注意力变体），日收益率预测效果未超越 GRU</li>
+  <li><strong>损失函数：</strong>对比了 MSE loss 与 IC loss；标签与特征分别进行标准化</li>
+</ul>
+<div class="m-sec">已知优化方向</div>
+<ul>
+  <li>更强的 embedding 模型（当时随机选择轻量模型以优先速度；领域专用模型可显著提升表征质量）</li>
+  <li>向量聚合从简单平均改为按时间/点赞/阅读量加权</li>
+  <li>加入昨日收益率或量价因子，辅助模型判断 alpha 是否已反映于价格</li>
+</ul>
+<div class="box-green">✓ 确认 embedding 特征存在有效 alpha 信号 · 全 A 股 5 日 IC 0.16</div>`
+  }
+},
+
+t2: {
+  en: {
+    title: "Black Swan Risk Alert System",
+    sub: "Tianbao Private Equity · Risk Management · Sep 2024 – May 2025",
+    body: `<div class="m-sec">Project Overview</div>
+<p>An automated pre-market alert system addressing a structural blind spot in price/volume quantitative models: information-layer shocks. When a major negative event (financial fraud, regulatory sanction, sudden corporate crisis) emerges overnight, the quant model still sees yesterday's healthy price data and may plan to buy — or already holds — the affected stock. In China's market, such events trigger consecutive limit-downs, making exit impossible for days. This system scans daily news via an LLM API before market open, scores each item on a −10 to +10 risk scale, and removes affected positions from the execution plan before the opening bell.</p>
+<div class="m-sec">Key Metrics</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">5</div><div class="stat-lbl">Real-world major loss events successfully identified and avoided</div></div>
+  <div class="stat-box"><div class="stat-val">~100%</div><div class="stat-lbl">Max single-stock drawdown avoided per event — position removed before limit-down chain began</div></div>
+  <div class="stat-box"><div class="stat-val">−10 / −9</div><div class="stat-lbl">Score thresholds: auto-exit (−10) · human review (−9, typically 1–2 cases/day)</div></div>
+</div>
+<div class="m-sec">System Architecture</div>
+<div class="pipeline">
+  <span class="p-step">Daily news fetch</span><span class="p-arr">→</span>
+  <span class="p-step">LLM API scoring (−10 to +10)</span><span class="p-arr">→</span>
+  <span class="p-step">Threshold filter</span><span class="p-arr">→</span>
+  <span class="p-step">Pre-market alert</span><span class="p-arr">→</span>
+  <span class="p-step">Auto remove / trader review</span>
+</div>
+<div class="m-sec">Two Response Scenarios</div>
+<div class="compare">
+  <div class="cbox before"><div class="clbl">Scenario A — Planned buy blocked</div>Model has a buy signal from yesterday's price data, but overnight news scores −10. System removes the stock from today's execution plan before open. Without this, the model would enter the position and face days of consecutive limit-downs with no exit.</div>
+  <div class="cbox after"><div class="clbl">Scenario B — Existing holding exited</div>Model already holds the stock. System triggers a competitive bid at the limit-down price at open. If the stock hits limit-down, the early bid secures an exit slot ahead of the crowd. If not, the competitive bid still executes a clean exit — avoiding further deterioration.</div>
+</div>
+<div class="m-sec">Scoring & Threshold Logic</div>
+<ul>
+  <li><strong>Score = −10:</strong> Automatic full position removal — covers financial fraud disclosures, regulatory trading halts, major negative corporate announcements</li>
+  <li><strong>Score = −9:</strong> Flagged for human trader review — typically 1–2 cases per day, up to ~10 on high-news days; volume is manageable for real-time assessment</li>
+  <li><strong>Data reuse:</strong> Built on the same daily news feed infrastructure as the NLP alpha project (①), adding zero incremental data cost</li>
+</ul>
+<div class="box-green">✓ Identified 5 real-world major loss events · In each case, position was removed before the limit-down chain began — ~100% of the potential max single-stock drawdown avoided · Operates fully pre-market with no execution-time delay</div>`
+  },
+  cn: {
+    title: "黑天鹅风险预警系统",
+    sub: "天宝私募基金 · 风险管理 · 2024年9月 – 2025年5月",
+    body: `<div class="m-sec">项目概述</div>
+<p>一个盘前自动化风险预警系统，解决量价模型的结构性盲区——信息层冲击。当重大负面事件（财务暴雷、监管处罚、突发公司危机）在隔夜出现时，量化模型仍只看到昨日的健康价量数据，可能计划买入或已持有该股票。在 A 股市场，此类事件往往触发连续跌停，导致数日内无法出场。该系统在每个交易日开盘前通过 LLM API 扫描当日新闻，对每条内容按 −10 到 +10 评估风险，并在开盘前将被标记股票从执行计划中移除。</p>
+<div class="m-sec">核心指标</div>
+<div class="stat-row">
+  <div class="stat-box"><div class="stat-val">5次</div><div class="stat-lbl">实战成功识别并规避重大亏损事件</div></div>
+  <div class="stat-box"><div class="stat-val">~100%</div><div class="stat-lbl">每次事件中规避的单股最大回撤 — 仓位在连续跌停开始前已移除</div></div>
+  <div class="stat-box"><div class="stat-val">−10 / −9</div><div class="stat-lbl">触发阈值：自动清仓（−10）· 人工审核（−9，通常每日 1–2 例）</div></div>
+</div>
+<div class="m-sec">系统架构</div>
+<div class="pipeline">
+  <span class="p-step">每日新闻获取</span><span class="p-arr">→</span>
+  <span class="p-step">LLM API 评分（−10 到 +10）</span><span class="p-arr">→</span>
+  <span class="p-step">阈值过滤</span><span class="p-arr">→</span>
+  <span class="p-step">盘前预警</span><span class="p-arr">→</span>
+  <span class="p-step">自动移除 / 交易员审核</span>
+</div>
+<div class="m-sec">两种响应情景</div>
+<div class="compare">
+  <div class="cbox before"><div class="clbl">情景 A — 拦截计划买入</div>模型基于昨日价量产生买入信号，但隔夜新闻评分 −10。系统在开盘前将该股从今日执行计划中移除。若无此系统，模型将按计划买入，随后面临连续跌停、无法出场的困境。</div>
+  <div class="cbox after"><div class="clbl">情景 B — 已持仓竞价清仓</div>模型已持有该股票。系统在开盘时触发跌停价竞价挂单。若股票跌停，提前挂单的竞价资格可获得优先离场机会；若未跌停，竞价也能完成清仓，避免后续更严重的风险累积。</div>
+</div>
+<div class="m-sec">评分与阈值逻辑</div>
+<ul>
+  <li><strong>评分 = −10：</strong>自动全量清仓 — 覆盖财务暴雷披露、监管停牌通知、重大负面公告等</li>
+  <li><strong>评分 = −9：</strong>标记给交易员人工审核 — 通常每日 1–2 例，高新闻日最多约 10 例，量级完全可实时处理</li>
+  <li><strong>数据复用：</strong>复用 NLP Alpha 项目（①）已建立的每日新闻推送基础设施，无额外数据成本</li>
+</ul>
+<div class="box-green">✓ 实战识别 5 次重大亏损事件 · 每次均在连续跌停开始前完成仓位移除 — 规避约 100% 潜在单股最大回撤 · 全程盘前执行，无执行时延</div>`
+  }
+},
+
+t3: {
+  en: {
+    title: "Data Infrastructure & Tooling",
+    sub: "Tianbao Private Equity · Supporting Tools · Sep 2024 – May 2025",
+    body: `<div class="m-sec">Project Overview</div>
+<p>Three infrastructure and tooling projects built to support the quantitative research workflow at Tianbao: a custom web crawler for data sources not covered by vendors, a rewritten real-time PnL calculation script, and a benchmark of the RWKV sequence model architecture. Also includes a reusable brute-force factor exploration framework for ongoing alpha research.</p>
+<div class="m-sec">Three Supporting Tools</div>
+<ul>
+  <li><strong>Web Crawling Framework:</strong> Built custom crawler for public platforms not covered by the vendor feed. The alpha factor derived from this data source achieved IC 0.05 (correlation with forward returns), confirming predictive signal. Its low correlation with existing model factors makes it an independent alpha source — providing incremental gain when combined with the production model. Now in live deployment.</li>
+  <li><strong>Real-time PnL Script:</strong> Company original method used yesterday closing vs today closing price — ignored intra-morning rebalancing window (09:30–10:00). Rewrote to separate yesterday held positions from newly rebalanced positions. Error reduced: ±20% → ±2% (remainder from fees/tax)</li>
+  <li><strong>RWKV Architecture Research:</strong> RWKV is a more computationally efficient sequence model that eliminates the quadratic cost of standard attention by replacing it with a linear-time mechanism; supports both parallel training and fast sequential inference. Benchmarked against GRU on daily return prediction — no improvement found; deepened understanding of memory vs attention trade-offs</li>
+</ul>
+<div class="m-sec">Factor Exploration Framework</div>
+<ul>
+  <li>Brute-force candidate factor exploration + IC/correlation/monotonicity filtering — reusable screening infrastructure for ongoing alpha research</li>
+</ul>
+<div class="box-amber">⚡ Real-time PnL error ±20% → ±2% · Crawler-derived factor IC 0.05 (predictive signal confirmed, low correlation with existing factors → incremental gain) in live model</div>`
+  },
+  cn: {
+    title: "数据基础设施与工具",
+    sub: "天宝私募基金 · 支撑工具 · 2024年9月 – 2025年5月",
+    body: `<div class="m-sec">项目概述</div>
+<p>天宝实习期间开发的三项基础设施与工具，用于支撑量化研究工作流：针对数据商未覆盖数据源的自建爬虫、重写后的实时收益预测脚本，以及 RWKV 序列模型架构性能测试。另附一套可复用的暴力因子探索筛选框架，用于持续 Alpha 研究。</p>
+<div class="m-sec">三项支撑工具</div>
+<ul>
+  <li><strong>爬虫框架：</strong>自建爬虫采集数据商未覆盖的公开平台数据。基于该数据源构建的因子 IC 达 0.05（与未来收益率的相关性），证明具备一定预测能力；同时与现有模型因子相关性低，可作为独立 Alpha 来源，在与生产模型结合时带来额外增益。已入库用于实盘模型。</li>
+  <li><strong>实时收益预测脚本：</strong>公司原方法用昨日收盘价 vs 今日收盘价估算收益，未考虑 09:30–10:00 调仓窗口内的价格差异。重写为分别计算昨日持仓收益 + 调仓后新持仓收益。预估误差从 ±20% 压缩至 ±2%（剩余来自手续费/税）</li>
+  <li><strong>RWKV 架构研究：</strong>RWKV 是一种计算效率更高的序列模型，通过线性时间机制取代标准注意力的二次方计算开销；支持并行训练与快速顺序推理。在日收益率预测任务上与 GRU 对比——未见提升；加深了对序列建模中记忆与注意力权衡的理解</li>
+</ul>
+<div class="m-sec">因子自动化探索框架</div>
+<ul>
+  <li>暴力探索候选因子，通过 IC/相关性/单调性条件筛选；建立可复用的筛选基础设施</li>
+</ul>
+<div class="box-amber">⚡ 实时收益误差 ±20% → ±2% · 爬虫因子 IC 0.05（预测能力已验证，与现有因子低相关 → 带来独立增益）已入实盘模型</div>`
+  }
+},
+
+});
+
+</script>
+
+</body>
+</html>
